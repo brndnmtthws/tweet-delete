@@ -80,6 +80,7 @@ class Deleter:
         statuses = [0]  # trick to force initial fetch
         last_min_id = None
         max_id = -1
+        tweets_read = 0
         click.echo(click.style(
             "checking for tweets, starting from last_max_id={}".format(last_max_id), fg='white'))
         while len(statuses) > 0 and max_id < last_max_id:
@@ -89,6 +90,7 @@ class Deleter:
                 max_id=last_min_id,
                 count=200
             )
+            tweets_read += len(statuses)
             for status in statuses:
                 max_id = max([status.id, max_id])
                 if last_min_id:
@@ -105,7 +107,7 @@ class Deleter:
                 break
 
         click.echo(click.style(
-            "done checking for tweets, max_id={}".format(max_id), fg='white'))
+            "done checking for tweets, tweets_read={} max_id={}".format(tweets_read, max_id), fg='white'))
         return max_id
 
     def run(self):
