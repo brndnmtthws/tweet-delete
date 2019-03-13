@@ -61,7 +61,7 @@ class Deleter:
         gevent.spawn_later(seconds_until, self.delete, status)
 
     def delete(self, status):
-        click.echo(click.style("⁉️ deleting Tweet ID={} favourites={} retweets={} text={}".format(
+        click.echo(click.style("🗑  deleting tweet ID={} favourites={} retweets={} text={}".format(
             status.id, status.favorite_count, status.retweet_count, status.text), fg="blue"))
         self.api.DestroyStatus(status.id)
 
@@ -80,6 +80,8 @@ class Deleter:
         statuses = [0]  # trick to force initial fetch
         last_min_id = None
         max_id = -1
+        click.echo(click.style(
+            "checking for tweets, starting from last_max_id={}".format(last_max_id), fg='white'))
         while len(statuses) > 0 and max_id < last_max_id:
             statuses = self.api.GetUserTimeline(
                 include_rts=True,
@@ -101,6 +103,9 @@ class Deleter:
                     and len(statuses) > 0 \
                     and not self.should_be_deleted(statuses[0]):
                 break
+
+        click.echo(click.style(
+            "done checking for tweets, max_id={}".format(max_id), fg='white'))
         return max_id
 
     def run(self):
