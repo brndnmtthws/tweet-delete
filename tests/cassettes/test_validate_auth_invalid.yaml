@@ -1,0 +1,44 @@
+interactions:
+- request:
+    body: null
+    headers:
+      Accept:
+      - !!binary |
+        Ki8q
+      Accept-Encoding:
+      - !!binary |
+        Z3ppcCwgZGVmbGF0ZQ==
+      Authorization:
+      - !!binary |
+        T0F1dGggb2F1dGhfbm9uY2U9IjQ3MjU3MTkyMTg4MzkyMDY5MDAxNTUyNDkxMjc4Iiwgb2F1dGhf
+        dGltZXN0YW1wPSIxNTUyNDkxMjc4Iiwgb2F1dGhfdmVyc2lvbj0iMS4wIiwgb2F1dGhfc2lnbmF0
+        dXJlX21ldGhvZD0iSE1BQy1TSEExIiwgb2F1dGhfY29uc3VtZXJfa2V5PSJhIiwgb2F1dGhfdG9r
+        ZW49ImMiLCBvYXV0aF9zaWduYXR1cmU9Ijh4bnpBdGYzaFkybU9Sd3lPZTBrQ2ZyWSUyQkdzJTNE
+        Ig==
+      Connection:
+      - !!binary |
+        a2VlcC1hbGl2ZQ==
+      User-Agent:
+      - !!binary |
+        cHl0aG9uLXJlcXVlc3RzLzIuMjEuMA==
+    method: GET
+    uri: https://api.twitter.com/1.1/account/verify_credentials.json?include_entities=False&skip_status=False&include_email=false&tweet_mode=compat
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAKpWSi0qyi8qVrKKrlZKzk9JVbKysNRRyk0tLk5MB3KUPPPKEnMyUxTyixRSKwoy
+        i1JTFErys1Pz9JRqY2sBAAAA//8DAJyYHHM+AAAA
+    headers:
+      content-encoding: [gzip]
+      content-length: ['87']
+      content-type: [application/json; charset=utf-8]
+      date: ['Wed, 13 Mar 2019 15:34:38 GMT']
+      server: [tsa_b]
+      set-cookie: ['personalization_id="v1_J+gxAkYJHRQNksnYG5wPEA=="; Max-Age=63072000;
+          Expires=Fri, 12 Mar 2021 15:34:38 GMT; Path=/; Domain=.twitter.com', 'guest_id=v1%3A155249127830390846;
+          Max-Age=63072000; Expires=Fri, 12 Mar 2021 15:34:38 GMT; Path=/; Domain=.twitter.com']
+      strict-transport-security: [max-age=631138519]
+      x-connection-hash: [17e11bb0075fb166c90704fc08af10c2]
+      x-response-time: ['8']
+    status: {code: 401, message: Authorization Required}
+version: 1

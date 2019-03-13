@@ -1,0 +1,30 @@
+# Ignore my helm values
+myvalues.yaml
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+
+# Unit test / coverage reports
+.pytest_cache/
+.coverage
+.coverage.*
+*.cover
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# VSCode
+.vscode
+*.code-workspace

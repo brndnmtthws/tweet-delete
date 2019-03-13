@@ -1,0 +1,62 @@
+interactions:
+- request:
+    body: id=1&trim_user=False
+    headers:
+      Accept:
+      - !!binary |
+        Ki8q
+      Accept-Encoding:
+      - !!binary |
+        Z3ppcCwgZGVmbGF0ZQ==
+      Authorization:
+      - !!binary |
+        T0F1dGggb2F1dGhfbm9uY2U9Ijk4Mjg3OTQxNDkwMDQzNTQwOTYxNTUyNDk4NDA4Iiwgb2F1dGhf
+        dGltZXN0YW1wPSIxNTUyNDk4NDA4Iiwgb2F1dGhfdmVyc2lvbj0iMS4wIiwgb2F1dGhfc2lnbmF0
+        dXJlX21ldGhvZD0iSE1BQy1TSEExIiwgb2F1dGhfY29uc3VtZXJfa2V5PSJ5U3dzdkF2T1NWV1NM
+        RWFxckZ3c1pqMkE5Iiwgb2F1dGhfdG9rZW49Ijk1OTQ0NjkxMjE1OTE1ODI3My1WR3Y5UjVGNzJm
+        c3RTclFpS0NMUmZ0bjRzTDBTY0dVIiwgb2F1dGhfc2lnbmF0dXJlPSJYR3RldVR2SEs2MEVDRWF0
+        eVlacSUyRkY1MHJ3OCUzRCI=
+      Connection:
+      - !!binary |
+        a2VlcC1hbGl2ZQ==
+      Content-Length: ['20']
+      Content-Type:
+      - !!binary |
+        YXBwbGljYXRpb24veC13d3ctZm9ybS11cmxlbmNvZGVk
+      User-Agent:
+      - !!binary |
+        cHl0aG9uLXJlcXVlc3RzLzIuMjEuMA==
+    method: POST
+    uri: https://api.twitter.com/1.1/statuses/destroy/1.json
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAAAKpWSi0qyi8qVrKKrlZKzk9JVbIyNDHRUcpNLS5OTAfylPzyFYpLEktKixXS8kvz
+        UhTKM0syFEoyEksUPF30lGpjawEAAAD//wMAET32S0MAAAA=
+    headers:
+      cache-control: ['no-cache, no-store, must-revalidate, pre-check=0, post-check=0']
+      content-disposition: [attachment; filename=json.json]
+      content-encoding: [gzip]
+      content-length: ['92']
+      content-type: [application/json; charset=utf-8]
+      date: ['Wed, 13 Mar 2019 17:33:28 GMT']
+      expires: ['Tue, 31 Mar 1981 05:00:00 GMT']
+      last-modified: ['Wed, 13 Mar 2019 17:33:28 GMT']
+      pragma: [no-cache]
+      server: [tsa_b]
+      set-cookie: ['personalization_id="v1_kiSBRTKPJa/CSxvaglE32A=="; Max-Age=63072000;
+          Expires=Fri, 12 Mar 2021 17:33:28 GMT; Path=/; Domain=.twitter.com', lang=en;
+          Path=/, 'guest_id=v1%3A155249840851382803; Max-Age=63072000; Expires=Fri,
+          12 Mar 2021 17:33:28 GMT; Path=/; Domain=.twitter.com']
+      status: [404 Not Found]
+      strict-transport-security: [max-age=631138519]
+      x-connection-hash: [8148915a62514567e890e029a2a4ef85]
+      x-content-type-options: [nosniff]
+      x-frame-options: [SAMEORIGIN]
+      x-response-time: ['13']
+      x-transaction: [00fc40ab0002d291]
+      x-tsa-request-body-time: ['1']
+      x-twitter-response-tags: [BouncerCompliant]
+      x-xss-protection: ['1; mode=block; report=https://twitter.com/i/xss_report']
+    status: {code: 404, message: Not Found}
+version: 1
