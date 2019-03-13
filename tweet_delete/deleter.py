@@ -76,21 +76,23 @@ class Deleter:
             return True
         return False
 
-    def check_for_tweets(self):
-        statuses = [0]  # trick to make initial fetch
-        last_max_id = None
-        while len(statuses) > 0:
+    def check_for_tweets(self, last_max_id=0):
+        statuses = [0]  # trick to force initial fetch
+        last_min_id = None
+        max_id = 0
+        while len(statuses) > 0 and max_id < last_max_id:
             statuses = self.api.GetUserTimeline(
                 include_rts=True,
                 exclude_replies=False,
-                max_id=last_max_id,
+                max_id=last_min_id,
                 count=200
             )
             for status in statuses:
-                if last_max_id:
-                    last_max_id = min([status.id - 1, last_max_id])
+                max_id = max([status.id, max_id])
+                if last_min_id:
+                    last_min_id = min([status.id - 1, last_min_id])
                 else:
-                    last_max_id = status.id - 1
+                    last_min_id = status.id - 1
                 self.to_be_deleted(status)
 
             # If the first tweet is too old to care about, stop fetching the
@@ -99,8 +101,10 @@ class Deleter:
                     and len(statuses) > 0 \
                     and not self.should_be_deleted(statuses[0]):
                 break
+        return max_id
 
     def run(self):
+        max_id = self.check_for_tweets()
         while True:
-            self.check_for_tweets()
+            max_id = self.check_for_tweets(last_max_id=max_id)
             gevent.sleep(900)
