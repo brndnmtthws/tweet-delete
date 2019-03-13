@@ -79,7 +79,7 @@ class Deleter:
     def check_for_tweets(self, last_max_id=0):
         statuses = [0]  # trick to force initial fetch
         last_min_id = None
-        max_id = 0
+        max_id = -1
         while len(statuses) > 0 and max_id < last_max_id:
             statuses = self.api.GetUserTimeline(
                 include_rts=True,
