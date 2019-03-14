@@ -159,14 +159,20 @@ def test_check_for_tweets(mocker, check_fixture_cm):
                                        created_at="Wed Mar 13 15:16:59 +0000 2019"))
 
     with check_fixture_cm(statuses) as mock:
+        mock.side_effect = [statuses, []]
         max_id = d.check_for_tweets()
 
-    mock.assert_called_with(d.api,
-                            include_rts=True,
-                            exclude_replies=False,
-                            max_id=None,
-                            count=200)
-    assert len(mock.call_args_list) == 1
+    mock.assert_has_calls([call(d.api,
+                                include_rts=True,
+                                exclude_replies=False,
+                                max_id=None,
+                                count=200),
+                           call(d.api,
+                                include_rts=True,
+                                exclude_replies=False,
+                                max_id=90,
+                                count=200)])
+    assert len(mock.call_args_list) == 2
     assert max_id == 100
     calls = [call(s) for s in statuses]
     d.delete.assert_has_calls(calls)
@@ -178,16 +184,23 @@ def test_check_for_tweets(mocker, check_fixture_cm):
                                        favorite_count=1,
                                        retweet_count=1,
                                        created_at="Wed Mar 13 15:16:59 +0000 2019"))
-
+    max_id = None
     with check_fixture_cm(statuses) as mock:
+        mock.side_effect = [statuses, []]
         max_id = d.check_for_tweets(max_id)
 
-    mock.assert_called_with(d.api,
-                            include_rts=True,
-                            exclude_replies=False,
-                            max_id=None,
-                            count=200)
-    assert len(mock.call_args_list) == 1
+    mock.assert_has_calls([call(d.api,
+                                include_rts=True,
+                                exclude_replies=False,
+                                max_id=None,
+                                count=200),
+                           call(d.api,
+                                include_rts=True,
+                                exclude_replies=False,
+                                max_id=100,
+                                count=200)])
+
+    assert len(mock.call_args_list) == 2
     assert max_id == 110
     calls = [call(s) for s in statuses]
     d.delete.assert_has_calls(calls)
@@ -200,15 +213,22 @@ def test_check_for_tweets(mocker, check_fixture_cm):
                                        retweet_count=99,
                                        created_at="Wed Mar 13 15:16:59 +0000 2019"))
 
+    max_id = None
     with check_fixture_cm(statuses) as mock:
+        mock.side_effect = [statuses, []]
         max_id = d.check_for_tweets(max_id)
 
-    mock.assert_called_with(d.api,
-                            include_rts=True,
-                            exclude_replies=False,
-                            max_id=None,
-                            count=200)
-    assert len(mock.call_args_list) == 1
+    mock.assert_has_calls([call(d.api,
+                                include_rts=True,
+                                exclude_replies=False,
+                                max_id=None,
+                                count=200),
+                           call(d.api,
+                                include_rts=True,
+                                exclude_replies=False,
+                                max_id=110,
+                                count=200)])
+    assert len(mock.call_args_list) == 2
     assert max_id == 120
     d.delete.assert_not_called()
     d.delete.reset_mock()
@@ -220,6 +240,7 @@ def test_check_for_tweets(mocker, check_fixture_cm):
                                         retweet_count=99,
                                         created_at="Wed Mar 13 15:16:59 +0000 2019"))
 
+    max_id = None
     with check_fixture_cm(statuses1) as mock:
         mock.side_effect = [statuses1, []]
         max_id = d.check_for_tweets(max_id)
@@ -245,6 +266,7 @@ def test_check_for_tweets(mocker, check_fixture_cm):
                                         retweet_count=1,
                                         created_at="Wed Mar 13 15:16:59 +0000 2019"))
 
+    max_id = None
     with check_fixture_cm(statuses2) as mock:
         mock.side_effect = [statuses2, []]
         max_id = d.check_for_tweets(max_id)
@@ -273,6 +295,7 @@ def test_check_for_tweets(mocker, check_fixture_cm):
                                         retweet_count=99,
                                         created_at="Wed Mar 13 15:16:59 +0000 2019"))
 
+    max_id = None
     with check_fixture_cm(statuses2) as mock:
         mock.side_effect = [statuses2, statuses3, []]
         max_id = d.check_for_tweets(max_id)
@@ -321,14 +344,20 @@ def test_schedule_delete(mocker, check_fixture_cm):
                                        created_at=datetime.datetime.utcnow().isoformat()))
 
     with check_fixture_cm(statuses) as mock:
+        mock.side_effect = [statuses, []]
         max_id = d.check_for_tweets()
 
-    mock.assert_called_with(d.api,
-                            include_rts=True,
-                            exclude_replies=False,
-                            max_id=None,
-                            count=200)
-    assert len(mock.call_args_list) == 1
+    mock.assert_has_calls([call(d.api,
+                                include_rts=True,
+                                exclude_replies=False,
+                                max_id=None,
+                                count=200),
+                           call(d.api,
+                                include_rts=True,
+                                exclude_replies=False,
+                                max_id=90,
+                                count=200)])
+    assert len(mock.call_args_list) == 2
     assert max_id == 100
 
     for s in statuses:

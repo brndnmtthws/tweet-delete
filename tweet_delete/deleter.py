@@ -111,7 +111,7 @@ class Deleter:
                     (name + ' histo').ljust(16), min(values), line, max(values)
                 ), fg='magenta'))
 
-    def check_for_tweets(self, last_max_id=0):
+    def check_for_tweets(self, last_max_id=None):
         statuses = [0]  # trick to force initial fetch
         last_min_id = None
         max_id = 0
@@ -122,7 +122,7 @@ class Deleter:
         # same tweets as the previous run
         favourite_counts = []
         retweet_counts = []
-        while len(statuses) > 0 and (last_min_id is None or last_min_id < last_max_id):
+        while len(statuses) > 0 and (last_max_id is None or (last_min_id is not None and last_min_id < last_max_id)):
             statuses = self.api.GetUserTimeline(
                 include_rts=True,
                 exclude_replies=False,
@@ -160,6 +160,7 @@ class Deleter:
 
     def run(self):
         max_id = self.check_for_tweets()
+        gevent.sleep(60)
         delay = 5
         while True:
             try:
