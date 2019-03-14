@@ -22,7 +22,7 @@ test_requires = [
 
 setuptools.setup(
     name="tweet-delete",
-    version="0.1.4",
+    version="0.1.5",
     author="Brenden Matthews",
     author_email="brenden@diddyinc.com",
     description="Self-destructing Tweet tool",
