@@ -412,20 +412,15 @@ def test_check_for_tweets2(mocker, check_fixture_cm):
                                         created_at="Wed Mar 13 15:16:59 +0000 2019"))
 
     with check_fixture_cm(statuses2) as mock:
-        mock.side_effect = [statuses2, []]
-        max_id = d.check_for_tweets()
+        mock.side_effect = [statuses2, statuses1, []]
+        max_id = d.check_for_tweets(max_id)
 
     mock.assert_has_calls([call(d.api,
                                 include_rts=True,
                                 exclude_replies=False,
                                 max_id=None,
-                                count=200),
-                           call(d.api,
-                                include_rts=True,
-                                exclude_replies=False,
-                                max_id=100,
                                 count=200)])
-    assert len(mock.call_args_list) == 2
+    assert len(mock.call_args_list) == 1
     assert max_id == 110
     calls = [call(s) for s in statuses2]
     d.delete.assert_has_calls(calls)
