@@ -95,7 +95,7 @@ class Deleter:
 
         click.echo(click.style(
             '🔢 {}: count={} min={} max={} mean={:.1f} harmonic_mean={:.1f} median={:.1f} mode={:.1f}'.format(
-                name.ljust(12), len(values), min(values), max(values),
+                name.ljust(16), len(values), min(values), max(values),
                 mean(values), harmonic_mean(
                     values), median(values), mode(values)
             ), fg='magenta'))
@@ -103,12 +103,12 @@ class Deleter:
         # make a tiny histo
         from sparklines import sparklines
         import numpy as np
-        hist, bin_edges = np.histogram(values, bins=range(15))
+        hist, _ = np.histogram(values, bins=range(15))
 
         for line in sparklines(list(hist)):
             click.echo(click.style(
                 '📈 {}: {} {} {}'.format(
-                    name.ljust(12), min(values), line, max(values)
+                    (name + ' histo').ljust(16), min(values), line, max(values)
                 ), fg='magenta'))
 
     def check_for_tweets(self, last_max_id=0):
