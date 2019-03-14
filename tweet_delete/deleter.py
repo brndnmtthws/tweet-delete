@@ -137,8 +137,11 @@ class Deleter:
                 else:
                     last_min_id = status.id - 1
                 self.to_be_deleted(status)
-                favourite_counts.append(status.favorite_count)
-                retweet_counts.append(status.retweet_count)
+
+                if not status.retweeted_status:
+                    # ignore retweets when collecting stats
+                    favourite_counts.append(status.favorite_count)
+                    retweet_counts.append(status.retweet_count)
 
             # If the first tweet is too old to care about, stop fetching the
             # timeline
