@@ -4,6 +4,7 @@ import click
 import json
 import sys
 import requests
+from tweet_delete.util import td_format
 from datetime import datetime
 from dateutil import parser
 from pygments import highlight
@@ -28,6 +29,7 @@ class Deleter:
         self.delete_everything_after = delete_everything_after
         self.last_since_id = None
         self.minimum_engagement = minimum_engagement
+        self.ids_scheduled_for_deletion = set()
 
     def validate_creds(self):
         return self.api.VerifyCredentials()
@@ -53,16 +55,37 @@ class Deleter:
             return True
         return False
 
+    def schedule_delete(self, status):
+        if not self.should_be_deleted(status) or status.id in self.ids_scheduled_for_deletion:
+            return
+        self.ids_scheduled_for_deletion.add(status.id)
+        created_at = parser.parse(status.created_at).replace(tzinfo=None)
+        expires_at = created_at + self.delete_older_than
+        seconds_until = (expires_at - datetime.utcnow()).total_seconds()
+        gevent.spawn_later(seconds_until, self.check_delete, status)
+        click.echo(click.style(
+            'scheduled ID={} for future deletion in {}'.format(status.id, td_format(seconds_until)), fg='blue'))
+
+    def check_delete(self, status):
+        status = self.api.GetStatus(status.id)
+        if status:
+            self.to_be_deleted(status)
+
     def delete(self, status):
         click.echo(click.style("🗑  deleting tweet ID={} favourites={} retweets={} text={}".format(
             status.id, status.favorite_count, status.retweet_count, status.text), fg="blue"))
         self.api.DestroyStatus(status.id)
+        if status.id in self.ids_scheduled_for_deletion:
+            self.ids_scheduled_for_deletion.remove(status.id)
 
     def to_be_deleted(self, status):
         engagements = 2 * int(status.retweet_count) + \
             int(status.favorite_count)
         if self.should_be_deleted_now(status) and engagements < self.minimum_engagement:
             self.delete(status)
+            return True
+        if self.should_be_deleted(status) and engagements < self.minimum_engagement:
+            self.schedule_delete(status)
             return True
         return False
 

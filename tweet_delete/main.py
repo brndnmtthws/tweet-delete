@@ -28,28 +28,6 @@ def validate_datetime(ctx, param, value):
         raise click.BadParameter('Invalid date/time')
 
 
-def td_format(td_object):
-    # Thanks https://stackoverflow.com/a/13756038
-    seconds = int(td_object.total_seconds())
-    periods = [
-        ('year',        60*60*24*365),
-        ('month',       60*60*24*30),
-        ('day',         60*60*24),
-        ('hour',        60*60),
-        ('minute',      60),
-        ('second',      1)
-    ]
-
-    strings = []
-    for period_name, period_seconds in periods:
-        if seconds >= period_seconds:
-            period_value, seconds = divmod(seconds, period_seconds)
-            has_s = 's' if period_value > 1 else ''
-            strings.append("%s %s%s" % (period_value, period_name, has_s))
-
-    return ", ".join(strings)
-
-
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
@@ -64,6 +42,7 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 def cli(consumer_key, consumer_secret, access_token_key, access_token_secret, delete_older_than, delete_everything_after, minimum_engagement):
     """A simple program to delete all your tweets! Woohoo!"""
     from tweet_delete.deleter import Deleter
+    from tweet_delete.util import td_format
     click.echo(click.style(
         '🐦␡ starting tweet-delete'.ljust(76) + '␡🐦', fg='green'))
     deleter = Deleter(consumer_key, consumer_secret, access_token_key,
@@ -80,7 +59,7 @@ def cli(consumer_key, consumer_secret, access_token_key, access_token_secret, de
         )
     )
     click.echo(click.style('👉 tweets older than {} will be deleted'.format(
-        td_format(delete_older_than)).ljust(77) + '👈', fg='yellow'))
+        td_format(delete_older_than.total_seconds())).ljust(77) + '👈', fg='yellow'))
     if delete_everything_after is not None:
         click.echo(click.style('👉 only tweets created after {} will be deleted'.format(
             str(delete_everything_after)).ljust(77) + '👈', fg='yellow'))
