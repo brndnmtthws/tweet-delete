@@ -92,11 +92,13 @@ class Deleter:
     def check_for_tweets(self, last_max_id=0):
         statuses = [0]  # trick to force initial fetch
         last_min_id = None
-        max_id = -1
+        max_id = 0
         tweets_read = 0
         click.echo(click.style(
             "checking for tweets, starting from last_max_id={}".format(last_max_id), fg='cyan'))
-        while len(statuses) > 0 and max_id < last_max_id:
+        # Read until either a) we run out of tweets or b) we start seeing the
+        # same tweets as the previous run
+        while len(statuses) > 0 and (last_min_id is None or last_min_id < last_max_id):
             statuses = self.api.GetUserTimeline(
                 include_rts=True,
                 exclude_replies=False,
