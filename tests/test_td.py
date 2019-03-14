@@ -303,7 +303,6 @@ def test_check_for_tweets(mocker, check_fixture_cm):
 @pytest.mark.vcr()
 def test_schedule_delete(mocker, check_fixture_cm):
     mocker.patch('tweet_delete.deleter.Deleter.delete')
-    mocker.patch('tweet_delete.deleter.Deleter.schedule_delete')
     import datetime
     d = Deleter('Mq0PdSJPMQwJwpMm3RtQKGkWA',
                 'kWPpBJvSk7gW59J59WxoWdy5yeA7T6Jr6OJ4yOwxta9I4qtjjG',
@@ -331,6 +330,6 @@ def test_schedule_delete(mocker, check_fixture_cm):
                             count=200)
     assert len(mock.call_args_list) == 1
     assert max_id == 100
-    calls = [call(s) for s in statuses]
-    d.schedule_delete.assert_has_calls(calls)
-    d.delete.assert_not_called()
+
+    for s in statuses:
+        assert s.id in d.ids_scheduled_for_deletion
