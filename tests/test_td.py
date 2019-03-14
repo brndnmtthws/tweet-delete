@@ -1,17 +1,9 @@
-from click.testing import CliRunner
 import pytest
 import click
 from tweet_delete.deleter import Deleter
-from tweet_delete import main
 import twitter
 from unittest.mock import patch, call
 import dateutil
-
-
-def test_no_args():
-    runner = CliRunner()
-    result = runner.invoke(main.cli, ['herp a derp'])
-    assert result.exit_code == 2
 
 
 @pytest.mark.vcr()
@@ -306,3 +298,39 @@ def test_check_for_tweets(mocker, check_fixture_cm):
     calls = [call(s) for s in statuses2]
     d.delete.assert_has_calls(calls)
     d.delete.reset_mock()
+
+
+@pytest.mark.vcr()
+def test_schedule_delete(mocker, check_fixture_cm):
+    mocker.patch('tweet_delete.deleter.Deleter.delete')
+    mocker.patch('tweet_delete.deleter.Deleter.schedule_delete')
+    import datetime
+    d = Deleter('Mq0PdSJPMQwJwpMm3RtQKGkWA',
+                'kWPpBJvSk7gW59J59WxoWdy5yeA7T6Jr6OJ4yOwxta9I4qtjjG',
+                '959446912159158273-4sLsH3PpTRh93f733s7EZLmLGL4haAD',
+                '98lOut16loWFuHn2uADQfUxP8F4Oxsa3wq6HpdDtbsMbH',
+                datetime.timedelta(seconds=10),
+                dateutil.parser.parse(
+                    '2008-09-03T20:56:35.450686Z').replace(tzinfo=None),
+                5)
+
+    statuses = []
+    for i in range(100, 90, -1):
+        statuses.append(twitter.Status(id=i,
+                                       favorite_count=1,
+                                       retweet_count=1,
+                                       created_at=datetime.datetime.utcnow().isoformat()))
+
+    with check_fixture_cm(statuses) as mock:
+        max_id = d.check_for_tweets()
+
+    mock.assert_called_with(d.api,
+                            include_rts=True,
+                            exclude_replies=False,
+                            max_id=None,
+                            count=200)
+    assert len(mock.call_args_list) == 1
+    assert max_id == 100
+    calls = [call(s) for s in statuses]
+    d.schedule_delete.assert_has_calls(calls)
+    d.delete.assert_not_called()
