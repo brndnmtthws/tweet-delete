@@ -122,7 +122,7 @@ class Deleter:
         # same tweets as the previous run
         favourite_counts = []
         retweet_counts = []
-        while len(statuses) > 0 and (last_max_id is None or last_min_id is not None or last_min_id < last_max_id):
+        while len(statuses) > 0 and (last_max_id is None or last_min_id is None or last_min_id < last_max_id):
             statuses = self.api.GetUserTimeline(
                 include_rts=True,
                 exclude_replies=False,
