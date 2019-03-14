@@ -94,7 +94,7 @@ class Deleter:
         from statistics import mean, harmonic_mean, median, mode
 
         click.echo(click.style(
-            '{} stats: count={} min={} max={} mean={:.1f} harmonic_mean={:.1f} median={:.1f} mode={:.1f}'.format(
+            'ƛ {}: count={} min={} max={} mean={:.1f} harmonic_mean={:.1f} median={:.1f} mode={:.1f}'.format(
                 name, len(values), min(values), max(values),
                 mean(values), harmonic_mean(
                     values), median(values), mode(values)
@@ -103,11 +103,11 @@ class Deleter:
         # make a tiny histo
         from sparklines import sparklines
         import numpy as np
-        hist, bin_edges = np.histogram(values, bins=range(20))
+        hist, bin_edges = np.histogram(values, bins=range(15))
 
         for line in sparklines(list(hist)):
             click.echo(click.style(
-                'histo: {} {} {} {}'.format(
+                'ƛ histo: {} {} {} {}'.format(
                     name, min(values), line, max(values)
                 ), fg='magenta'))
 
@@ -151,10 +151,11 @@ class Deleter:
                 break
 
         click.echo(click.style(
-            "done checking for tweets, tweets_read={} max_id={}".format(tweets_read, max_id), fg='cyan'))
+            "✅ done checking for tweets, tweets_read={} max_id={}".format(tweets_read, max_id), fg='cyan'))
 
-        self.print_stats_for('favourites', favourite_counts)
-        self.print_stats_for('retweets', retweet_counts)
+        if last_max_id == 0:
+            self.print_stats_for('favourites', favourite_counts)
+            self.print_stats_for('retweets', retweet_counts)
         return max_id
 
     def run(self):
