@@ -23,10 +23,10 @@ def test_validate_auth_invalid():
 
 @pytest.mark.vcr()
 def test_validate_auth_valid():
-    d = Deleter('ySwsvAvOSVWSLEaqrFwsZj2A9',
-                'cRJdcm2HiMLZL5l9Dyq2KGNKvuRfTCCzudoAfoo4gRH6Ipri2N',
-                '959446912159158273-VGv9R5F72fstSrQiKCLRftn4sL0ScGU',
-                'HCU2KK4O5HuYnKuvKUoCDhP2Hs7B0X1ikoAdMWtufExaW',
+    d = Deleter('Mq0PdSJPMQwJwpMm3RtQKGkWA',
+                'kWPpBJvSk7gW59J59WxoWdy5yeA7T6Jr6OJ4yOwxta9I4qtjjG',
+                '959446912159158273-4sLsH3PpTRh93f733s7EZLmLGL4haAD',
+                '98lOut16loWFuHn2uADQfUxP8F4Oxsa3wq6HpdDtbsMbH',
                 None,
                 None,
                 5)
@@ -36,27 +36,29 @@ def test_validate_auth_valid():
 
 
 @pytest.mark.vcr()
-def test_check_initial_tweets():
+def test_check_initial_tweets(mocker):
+    mocker.patch('tweet_delete.deleter.Deleter.delete')
     import datetime
-    d = Deleter('ySwsvAvOSVWSLEaqrFwsZj2A9',
-                'cRJdcm2HiMLZL5l9Dyq2KGNKvuRfTCCzudoAfoo4gRH6Ipri2N',
-                '959446912159158273-VGv9R5F72fstSrQiKCLRftn4sL0ScGU',
-                'HCU2KK4O5HuYnKuvKUoCDhP2Hs7B0X1ikoAdMWtufExaW',
+    d = Deleter('Mq0PdSJPMQwJwpMm3RtQKGkWA',
+                'kWPpBJvSk7gW59J59WxoWdy5yeA7T6Jr6OJ4yOwxta9I4qtjjG',
+                '959446912159158273-4sLsH3PpTRh93f733s7EZLmLGL4haAD',
+                '98lOut16loWFuHn2uADQfUxP8F4Oxsa3wq6HpdDtbsMbH',
                 datetime.timedelta(seconds=1),
                 None,
                 5)
 
     d.check_for_tweets()
+    assert d.delete.called
 
 
 @pytest.mark.vcr()
 def test_check_low_quality_tweets1(mocker):
     mocker.patch('tweet_delete.deleter.Deleter.delete')
     import datetime
-    d = Deleter('ySwsvAvOSVWSLEaqrFwsZj2A9',
-                'cRJdcm2HiMLZL5l9Dyq2KGNKvuRfTCCzudoAfoo4gRH6Ipri2N',
-                '959446912159158273-VGv9R5F72fstSrQiKCLRftn4sL0ScGU',
-                'HCU2KK4O5HuYnKuvKUoCDhP2Hs7B0X1ikoAdMWtufExaW',
+    d = Deleter('Mq0PdSJPMQwJwpMm3RtQKGkWA',
+                'kWPpBJvSk7gW59J59WxoWdy5yeA7T6Jr6OJ4yOwxta9I4qtjjG',
+                '959446912159158273-4sLsH3PpTRh93f733s7EZLmLGL4haAD',
+                '98lOut16loWFuHn2uADQfUxP8F4Oxsa3wq6HpdDtbsMbH',
                 datetime.timedelta(seconds=1),
                 None,
                 5)
@@ -74,10 +76,10 @@ def test_check_low_quality_tweets1(mocker):
 def test_check_low_quality_tweets2(mocker):
     mocker.patch('tweet_delete.deleter.Deleter.delete')
     import datetime
-    d = Deleter('ySwsvAvOSVWSLEaqrFwsZj2A9',
-                'cRJdcm2HiMLZL5l9Dyq2KGNKvuRfTCCzudoAfoo4gRH6Ipri2N',
-                '959446912159158273-VGv9R5F72fstSrQiKCLRftn4sL0ScGU',
-                'HCU2KK4O5HuYnKuvKUoCDhP2Hs7B0X1ikoAdMWtufExaW',
+    d = Deleter('Mq0PdSJPMQwJwpMm3RtQKGkWA',
+                'kWPpBJvSk7gW59J59WxoWdy5yeA7T6Jr6OJ4yOwxta9I4qtjjG',
+                '959446912159158273-4sLsH3PpTRh93f733s7EZLmLGL4haAD',
+                '98lOut16loWFuHn2uADQfUxP8F4Oxsa3wq6HpdDtbsMbH',
                 datetime.timedelta(seconds=1),
                 None,
                 5)
@@ -94,12 +96,11 @@ def test_check_low_quality_tweets2(mocker):
 @pytest.mark.vcr()
 def test_check_dont_delete_after_date(mocker):
     mocker.patch('tweet_delete.deleter.Deleter.delete')
-    mocker.patch('tweet_delete.deleter.Deleter.schedule_delete')
     import datetime
-    d = Deleter('ySwsvAvOSVWSLEaqrFwsZj2A9',
-                'cRJdcm2HiMLZL5l9Dyq2KGNKvuRfTCCzudoAfoo4gRH6Ipri2N',
-                '959446912159158273-VGv9R5F72fstSrQiKCLRftn4sL0ScGU',
-                'HCU2KK4O5HuYnKuvKUoCDhP2Hs7B0X1ikoAdMWtufExaW',
+    d = Deleter('Mq0PdSJPMQwJwpMm3RtQKGkWA',
+                'kWPpBJvSk7gW59J59WxoWdy5yeA7T6Jr6OJ4yOwxta9I4qtjjG',
+                '959446912159158273-4sLsH3PpTRh93f733s7EZLmLGL4haAD',
+                '98lOut16loWFuHn2uADQfUxP8F4Oxsa3wq6HpdDtbsMbH',
                 datetime.timedelta(seconds=1),
                 datetime.datetime.utcnow(),
                 5)
@@ -111,18 +112,16 @@ def test_check_dont_delete_after_date(mocker):
 
     assert d.to_be_deleted(status) == False
     assert not d.delete.called
-    assert not d.schedule_delete.called
 
 
 @pytest.mark.vcr()
 def test_check_delete_after_date(mocker):
     mocker.patch('tweet_delete.deleter.Deleter.delete')
-    mocker.patch('tweet_delete.deleter.Deleter.schedule_delete')
     import datetime
-    d = Deleter('ySwsvAvOSVWSLEaqrFwsZj2A9',
-                'cRJdcm2HiMLZL5l9Dyq2KGNKvuRfTCCzudoAfoo4gRH6Ipri2N',
-                '959446912159158273-VGv9R5F72fstSrQiKCLRftn4sL0ScGU',
-                'HCU2KK4O5HuYnKuvKUoCDhP2Hs7B0X1ikoAdMWtufExaW',
+    d = Deleter('Mq0PdSJPMQwJwpMm3RtQKGkWA',
+                'kWPpBJvSk7gW59J59WxoWdy5yeA7T6Jr6OJ4yOwxta9I4qtjjG',
+                '959446912159158273-4sLsH3PpTRh93f733s7EZLmLGL4haAD',
+                '98lOut16loWFuHn2uADQfUxP8F4Oxsa3wq6HpdDtbsMbH',
                 datetime.timedelta(seconds=1),
                 dateutil.parser.parse(
                     '2008-09-03T20:56:35.450686Z').replace(tzinfo=None),

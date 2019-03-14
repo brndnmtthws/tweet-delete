@@ -10,11 +10,11 @@ interactions:
         Z3ppcCwgZGVmbGF0ZQ==
       Authorization:
       - !!binary |
-        T0F1dGggb2F1dGhfbm9uY2U9IjQ3MjU3MTkyMTg4MzkyMDY5MDAxNTUyNDkxMjc4Iiwgb2F1dGhf
-        dGltZXN0YW1wPSIxNTUyNDkxMjc4Iiwgb2F1dGhfdmVyc2lvbj0iMS4wIiwgb2F1dGhfc2lnbmF0
-        dXJlX21ldGhvZD0iSE1BQy1TSEExIiwgb2F1dGhfY29uc3VtZXJfa2V5PSJhIiwgb2F1dGhfdG9r
-        ZW49ImMiLCBvYXV0aF9zaWduYXR1cmU9Ijh4bnpBdGYzaFkybU9Sd3lPZTBrQ2ZyWSUyQkdzJTNE
-        Ig==
+        T0F1dGggb2F1dGhfbm9uY2U9IjEwOTQzNzY2MDg0ODAzODQyMjA1MTU1MjUyNDYzNiIsIG9hdXRo
+        X3RpbWVzdGFtcD0iMTU1MjUyNDYzNiIsIG9hdXRoX3ZlcnNpb249IjEuMCIsIG9hdXRoX3NpZ25h
+        dHVyZV9tZXRob2Q9IkhNQUMtU0hBMSIsIG9hdXRoX2NvbnN1bWVyX2tleT0iYSIsIG9hdXRoX3Rv
+        a2VuPSJjIiwgb2F1dGhfc2lnbmF0dXJlPSJHUDA0bldBeWFaJTJGNTIycCUyQlk4Z3ZxQ1lOeWsw
+        JTNEIg==
       Connection:
       - !!binary |
         a2VlcC1hbGl2ZQ==
@@ -32,13 +32,13 @@ interactions:
       content-encoding: [gzip]
       content-length: ['87']
       content-type: [application/json; charset=utf-8]
-      date: ['Wed, 13 Mar 2019 15:34:38 GMT']
+      date: ['Thu, 14 Mar 2019 00:50:37 GMT']
       server: [tsa_b]
-      set-cookie: ['personalization_id="v1_J+gxAkYJHRQNksnYG5wPEA=="; Max-Age=63072000;
-          Expires=Fri, 12 Mar 2021 15:34:38 GMT; Path=/; Domain=.twitter.com', 'guest_id=v1%3A155249127830390846;
-          Max-Age=63072000; Expires=Fri, 12 Mar 2021 15:34:38 GMT; Path=/; Domain=.twitter.com']
+      set-cookie: ['personalization_id="v1_kpTVsV9C/xgEGMxFNqlIqg=="; Max-Age=63072000;
+          Expires=Sat, 13 Mar 2021 00:50:37 GMT; Path=/; Domain=.twitter.com', 'guest_id=v1%3A155252463701269963;
+          Max-Age=63072000; Expires=Sat, 13 Mar 2021 00:50:37 GMT; Path=/; Domain=.twitter.com']
       strict-transport-security: [max-age=631138519]
-      x-connection-hash: [17e11bb0075fb166c90704fc08af10c2]
-      x-response-time: ['8']
+      x-connection-hash: [3a927303c4f3ef99676ec9377935d758]
+      x-response-time: ['6']
     status: {code: 401, message: Authorization Required}
 version: 1

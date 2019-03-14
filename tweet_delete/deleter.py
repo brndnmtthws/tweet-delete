@@ -52,14 +52,6 @@ class Deleter:
             return True
         return False
 
-    def schedule_delete(self, status):
-        if not self.should_be_deleted(status):
-            return
-        created_at = parser.parse(status.created_at).replace(tzinfo=None)
-        expires_at = created_at + self.delete_older_than
-        seconds_until = (expires_at - datetime.utcnow()).total_seconds()
-        gevent.spawn_later(seconds_until, self.delete, status)
-
     def delete(self, status):
         click.echo(click.style("🗑  deleting tweet ID={} favourites={} retweets={} text={}".format(
             status.id, status.favorite_count, status.retweet_count, status.text), fg="blue"))
@@ -70,9 +62,6 @@ class Deleter:
             int(status.favorite_count)
         if self.should_be_deleted_now(status) and engagements < self.minimum_engagement:
             self.delete(status)
-            return True
-        if self.should_be_deleted(status) and engagements < self.minimum_engagement:
-            self.schedule_delete(status)
             return True
         return False
 
