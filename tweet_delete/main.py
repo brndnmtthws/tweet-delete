@@ -84,5 +84,5 @@ def cli(consumer_key, consumer_secret, access_token_key, access_token_secret, de
     if delete_everything_after is not None:
         click.echo(click.style('👉 only tweets created after {} will be deleted'.format(
             str(delete_everything_after)).ljust(77) + '👈', fg='yellow'))
-    click.echo(click.style('🦅 off we go'.ljust(77) + '🦅', fg='red'))
+    click.echo(click.style('🦅 off we go'.ljust(77) + '🦅', fg='green'))
     deleter.run()

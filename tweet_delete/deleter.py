@@ -3,6 +3,7 @@ import gevent
 import click
 import json
 import sys
+import requests
 from datetime import datetime
 from dateutil import parser
 from pygments import highlight
@@ -71,7 +72,7 @@ class Deleter:
         max_id = -1
         tweets_read = 0
         click.echo(click.style(
-            "checking for tweets, starting from last_max_id={}".format(last_max_id), fg='white'))
+            "checking for tweets, starting from last_max_id={}".format(last_max_id), fg='cyan'))
         while len(statuses) > 0 and max_id < last_max_id:
             statuses = self.api.GetUserTimeline(
                 include_rts=True,
@@ -96,11 +97,22 @@ class Deleter:
                 break
 
         click.echo(click.style(
-            "done checking for tweets, tweets_read={} max_id={}".format(tweets_read, max_id), fg='white'))
+            "done checking for tweets, tweets_read={} max_id={}".format(tweets_read, max_id), fg='cyan'))
         return max_id
 
     def run(self):
         max_id = self.check_for_tweets()
+        delay = 5
         while True:
-            max_id = self.check_for_tweets(last_max_id=max_id)
-            gevent.sleep(900)
+            try:
+                max_id = self.check_for_tweets(last_max_id=max_id)
+                gevent.sleep(900)
+                delay = 1
+            except requests.exceptions.RequestException as e:
+                delay = delay * 2.5
+                delay = min([delay, 300])
+                click.echo(click.style(
+                    "caught exception: {}".format(e), fg='red'))
+                click.echo(click.style(
+                    "will retry in {}s".format(delay), fg='red'))
+                gevent.sleep(delay)
