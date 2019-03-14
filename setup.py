@@ -11,6 +11,8 @@ requires = [
     'pytimeparse>=1.1.8',
     'colorama>=0.4.1',
     'Pygments>=2.3.1',
+    'sparklines>=0.4.2',
+    'numpy>=1.16.2',
 ]
 
 test_requires = [

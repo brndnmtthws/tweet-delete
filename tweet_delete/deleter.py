@@ -90,6 +90,27 @@ class Deleter:
                 return True
         return False
 
+    def print_stats_for(self, name, values):
+        from statistics import mean, harmonic_mean, median, mode
+
+        click.echo(click.style(
+            '{} stats: count={} min={} max={} mean={:.1f} harmonic_mean={:.1f} median={:.1f} mode={:.1f}'.format(
+                name, len(values), min(values), max(values),
+                mean(values), harmonic_mean(
+                    values), median(values), mode(values)
+            ), fg='magenta'))
+
+        # make a tiny histo
+        from sparklines import sparklines
+        import numpy as np
+        hist, bin_edges = np.histogram(values, bins=range(20))
+
+        for line in sparklines(list(hist)):
+            click.echo(click.style(
+                'histo: {} {} {} {}'.format(
+                    name, min(values), line, max(values)
+                ), fg='magenta'))
+
     def check_for_tweets(self, last_max_id=0):
         statuses = [0]  # trick to force initial fetch
         last_min_id = None
@@ -99,6 +120,8 @@ class Deleter:
             "checking for tweets, starting from last_max_id={}".format(last_max_id), fg='cyan'))
         # Read until either a) we run out of tweets or b) we start seeing the
         # same tweets as the previous run
+        favourite_counts = []
+        retweet_counts = []
         while len(statuses) > 0 and (last_min_id is None or last_min_id < last_max_id):
             statuses = self.api.GetUserTimeline(
                 include_rts=True,
@@ -114,6 +137,8 @@ class Deleter:
                 else:
                     last_min_id = status.id - 1
                 self.to_be_deleted(status)
+                favourite_counts.append(status.favorite_count)
+                retweet_counts.append(status.retweet_count)
 
             # If the first tweet is too old to care about, stop fetching the
             # timeline
@@ -124,6 +149,9 @@ class Deleter:
 
         click.echo(click.style(
             "done checking for tweets, tweets_read={} max_id={}".format(tweets_read, max_id), fg='cyan'))
+
+        self.print_stats_for('favourites', favourite_counts)
+        self.print_stats_for('retweets', retweet_counts)
         return max_id
 
     def run(self):
