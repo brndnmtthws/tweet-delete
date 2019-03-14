@@ -81,12 +81,13 @@ class Deleter:
     def to_be_deleted(self, status):
         engagements = 2 * int(status.retweet_count) + \
             int(status.favorite_count)
-        if self.should_be_deleted_now(status) and engagements < self.minimum_engagement:
-            self.delete(status)
-            return True
-        if self.should_be_deleted(status) and engagements < self.minimum_engagement:
-            self.schedule_delete(status)
-            return True
+        if engagements < self.minimum_engagement:
+            if self.should_be_deleted_now(status):
+                self.delete(status)
+                return True
+            if self.should_be_deleted(status):
+                self.schedule_delete(status)
+                return True
         return False
 
     def check_for_tweets(self, last_max_id=0):
