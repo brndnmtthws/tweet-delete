@@ -100,7 +100,15 @@ class Deleter:
                 return True
         return False
 
-    def print_stats_for(self, name, values):
+    @staticmethod
+    def zero_to_none(value):
+        if int(value) == 0:
+            return None
+        else:
+            return value
+
+    @staticmethod
+    def print_stats_for(name, values):
         from statistics import mean, harmonic_mean, median, mode
 
         click.echo(click.style(
@@ -114,12 +122,14 @@ class Deleter:
         from sparklines import sparklines
         import numpy as np
         hist, _ = np.histogram(values, bins=range(15))
+        if hist.sum() > 0:
+            hist = [Deleter.zero_to_none(v) for v in list(hist)]
 
-        for line in sparklines(list(hist)):
-            click.echo(click.style(
-                '📈 {}: {} {} {}'.format(
-                    (name + ' histo').ljust(16), min(values), line, max(values)
-                ), fg='magenta'))
+            for line in sparklines(hist):
+                click.echo(click.style(
+                    '📈 {}: {} {} {}'.format(
+                        (name + ' histo').ljust(16), min(values), line, max(values)
+                    ), fg='magenta'))
 
     def check_for_tweets(self, last_max_id=None):
         statuses = [0]  # trick to force initial fetch
@@ -164,8 +174,8 @@ class Deleter:
             "✅ done checking for tweets, tweets_read={} max_id={}".format(tweets_read, max_id), fg='cyan'))
 
         if not last_max_id:
-            self.print_stats_for('favourites', favourite_counts)
-            self.print_stats_for('retweets', retweet_counts)
+            Deleter.print_stats_for('favourites', favourite_counts)
+            Deleter.print_stats_for('retweets', retweet_counts)
         return max_id
 
     def run(self):
