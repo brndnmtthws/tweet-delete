@@ -10,19 +10,19 @@ interactions:
         Z3ppcCwgZGVmbGF0ZQ==
       Authorization:
       - !!binary |
-        T0F1dGggb2F1dGhfbm9uY2U9IjEwOTQzNzY2MDg0ODAzODQyMjA1MTU1MjUyNDYzNiIsIG9hdXRo
-        X3RpbWVzdGFtcD0iMTU1MjUyNDYzNiIsIG9hdXRoX3ZlcnNpb249IjEuMCIsIG9hdXRoX3NpZ25h
+        T0F1dGggb2F1dGhfbm9uY2U9IjE0NzY4NjE1NzI3NjU0MzczMjI2MTU1MjY1OTU3MCIsIG9hdXRo
+        X3RpbWVzdGFtcD0iMTU1MjY1OTU3MCIsIG9hdXRoX3ZlcnNpb249IjEuMCIsIG9hdXRoX3NpZ25h
         dHVyZV9tZXRob2Q9IkhNQUMtU0hBMSIsIG9hdXRoX2NvbnN1bWVyX2tleT0iYSIsIG9hdXRoX3Rv
-        a2VuPSJjIiwgb2F1dGhfc2lnbmF0dXJlPSJHUDA0bldBeWFaJTJGNTIycCUyQlk4Z3ZxQ1lOeWsw
-        JTNEIg==
+        a2VuPSJjIiwgb2F1dGhfc2lnbmF0dXJlPSJ6aTFxeHdJJTJCeHpaTEZ3ODFVa0xRSmJQNXRXQSUz
+        RCI=
       Connection:
       - !!binary |
         a2VlcC1hbGl2ZQ==
       User-Agent:
       - !!binary |
-        cHl0aG9uLXJlcXVlc3RzLzIuMjEuMA==
+        cHl0aG9uLXJlcXVlc3RzLzIuMjAuMQ==
     method: GET
-    uri: https://api.twitter.com/1.1/account/verify_credentials.json?include_entities=False&skip_status=False&include_email=false&tweet_mode=compat
+    uri: https://api.twitter.com/1.1/application/rate_limit_status.json?tweet_mode=compat
   response:
     body:
       string: !!binary |
@@ -32,13 +32,13 @@ interactions:
       content-encoding: [gzip]
       content-length: ['87']
       content-type: [application/json; charset=utf-8]
-      date: ['Thu, 14 Mar 2019 00:50:37 GMT']
+      date: ['Fri, 15 Mar 2019 14:19:30 GMT']
       server: [tsa_b]
-      set-cookie: ['personalization_id="v1_kpTVsV9C/xgEGMxFNqlIqg=="; Max-Age=63072000;
-          Expires=Sat, 13 Mar 2021 00:50:37 GMT; Path=/; Domain=.twitter.com', 'guest_id=v1%3A155252463701269963;
-          Max-Age=63072000; Expires=Sat, 13 Mar 2021 00:50:37 GMT; Path=/; Domain=.twitter.com']
+      set-cookie: ['personalization_id="v1_E60JgLWUQB7lLC5pQsOnQA=="; Max-Age=63072000;
+          Expires=Sun, 14 Mar 2021 14:19:30 GMT; Path=/; Domain=.twitter.com', 'guest_id=v1%3A155265957080724890;
+          Max-Age=63072000; Expires=Sun, 14 Mar 2021 14:19:30 GMT; Path=/; Domain=.twitter.com']
       strict-transport-security: [max-age=631138519]
-      x-connection-hash: [3a927303c4f3ef99676ec9377935d758]
-      x-response-time: ['6']
+      x-connection-hash: [60ac2cd909281740979dd317f20ef8ce]
+      x-response-time: ['7']
     status: {code: 401, message: Authorization Required}
 version: 1

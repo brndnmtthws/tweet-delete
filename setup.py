@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 requires = [
     'click>=7.0',
     'python-twitter>=3.5',
-    'gevent>=1.3.7',
+    'gevent>=1.4.0',
     'python-dateutil>=2.7.5',
     'pytimeparse>=1.1.8',
     'colorama>=0.4.1',
