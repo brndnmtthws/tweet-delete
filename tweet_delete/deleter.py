@@ -24,7 +24,9 @@ class Deleter:
         self.api = twitter.Api(consumer_key=consumer_key,
                                consumer_secret=consumer_secret,
                                access_token_key=access_token_key,
-                               access_token_secret=access_token_secret)
+                               access_token_secret=access_token_secret,
+                               sleep_on_rate_limit=True,
+                               use_gzip_compression=True)
         self.delete_older_than = delete_older_than
         self.delete_everything_after = delete_everything_after
         self.last_since_id = None
