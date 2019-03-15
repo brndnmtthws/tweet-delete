@@ -155,7 +155,7 @@ class Deleter:
         click.echo(click.style(
             "✅ done checking for tweets, tweets_read={} max_id={}".format(tweets_read, max_id), fg='cyan'))
 
-        if last_max_id == 0:
+        if not last_max_id:
             self.print_stats_for('favourites', favourite_counts)
             self.print_stats_for('retweets', retweet_counts)
         return max_id
