@@ -21,17 +21,25 @@ class Deleter:
                  delete_older_than,
                  delete_everything_after,
                  minimum_engagement):
-        self.api = twitter.Api(consumer_key=consumer_key,
-                               consumer_secret=consumer_secret,
-                               access_token_key=access_token_key,
-                               access_token_secret=access_token_secret,
-                               sleep_on_rate_limit=True,
-                               use_gzip_compression=True)
+        self.consumer_key = consumer_key
+        self.consumer_secret = consumer_secret
+        self.access_token_key = access_token_key
+        self.access_token_secret = access_token_secret
         self.delete_older_than = delete_older_than
         self.delete_everything_after = delete_everything_after
         self.last_since_id = None
         self.minimum_engagement = minimum_engagement
         self.ids_scheduled_for_deletion = set()
+
+        self.api = self.get_api()
+
+    def get_api(self):
+        return twitter.Api(consumer_key=self.consumer_key,
+                           consumer_secret=self.consumer_secret,
+                           access_token_key=self.access_token_key,
+                           access_token_secret=self.access_token_secret,
+                           sleep_on_rate_limit=True,
+                           use_gzip_compression=True)
 
     def validate_creds(self):
         return self.api.VerifyCredentials()
@@ -166,6 +174,8 @@ class Deleter:
         delay = 5
         while True:
             try:
+                # get a fresh API handle
+                self.api = self.get_api()
                 max_id = self.check_for_tweets(last_max_id=max_id)
                 gevent.sleep(900)
                 delay = 1
