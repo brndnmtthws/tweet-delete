@@ -75,7 +75,7 @@ class Deleter:
         seconds_until = max([10, seconds_until])
         gevent.spawn_later(seconds_until, self.check_delete, status)
         click.echo(click.style(
-            'scheduled ID={} for future deletion in {} or {}s'.format(status.id, td_format(seconds_until), seconds_until), fg='blue'))
+            'scheduled ID={} for future deletion in {}'.format(status.id, td_format(seconds_until)), fg='blue'))
 
     def check_delete(self, status):
         status_id = status.id
