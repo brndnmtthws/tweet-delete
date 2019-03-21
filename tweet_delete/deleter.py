@@ -85,10 +85,11 @@ class Deleter:
         self.api = self.get_api()
         status = self.api.GetStatus(status_id)
         if status:
-            if not self.to_be_deleted(status):
+            if self.to_be_deleted(status):
+                self.delete(status)
+            else:
                 click.echo(click.style(
                     "ID={} won't be deleted".format(status_id), fg='cyan'))
-
         else:
             click.echo(click.style(
                 'problem fetching status ID={}'.format(status_id), fg='red'))
@@ -105,8 +106,7 @@ class Deleter:
             int(status.favorite_count)
         if engagements < self.minimum_engagement:
             if self.should_be_deleted_now(status):
-                # self.delete(status)
-                self.schedule_delete(status)
+                self.delete(status)
                 return True
             if self.should_be_deleted(status):
                 self.schedule_delete(status)
