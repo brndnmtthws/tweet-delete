@@ -72,16 +72,17 @@ class Deleter:
         created_at = parser.parse(status.created_at).replace(tzinfo=None)
         expires_at = created_at + self.delete_older_than
         seconds_until = (expires_at - datetime.utcnow()).total_seconds()
+        seconds_until = max([10, seconds_until])
         gevent.spawn_later(seconds_until, self.check_delete, status)
         click.echo(click.style(
             'scheduled ID={} for future deletion in {} or {}s'.format(status.id, td_format(seconds_until), seconds_until), fg='blue'))
 
     def check_delete(self, status):
+        status_id = status.id
         click.echo(click.style(
             'ID={} was scheduled for deletion, checking if it should be deleted'.format(status_id), fg='cyan'))
         # get a fresh API handle
         self.api = self.get_api()
-        status_id = status.id
         status = self.api.GetStatus(status_id)
         if status:
             if not self.to_be_deleted(status):
@@ -104,7 +105,8 @@ class Deleter:
             int(status.favorite_count)
         if engagements < self.minimum_engagement:
             if self.should_be_deleted_now(status):
-                self.delete(status)
+                # self.delete(status)
+                self.schedule_delete(status)
                 return True
             if self.should_be_deleted(status):
                 self.schedule_delete(status)
