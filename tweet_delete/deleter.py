@@ -77,9 +77,15 @@ class Deleter:
             'scheduled ID={} for future deletion in {}'.format(status.id, td_format(seconds_until)), fg='blue'))
 
     def check_delete(self, status):
-        status = self.api.GetStatus(status.id)
+        # get a fresh API handle
+        self.api = self.get_api()
+        status_id = status.id
+        status = self.api.GetStatus(status_id)
         if status:
             self.to_be_deleted(status)
+        else:
+            click.echo(click.style(
+                'problem fetching status ID={}'.format(status_id), fg='red'))
 
     def delete(self, status):
         click.echo(click.style("🗑  deleting tweet ID={} favourites={} retweets={} text={}".format(
