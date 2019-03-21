@@ -74,15 +74,20 @@ class Deleter:
         seconds_until = (expires_at - datetime.utcnow()).total_seconds()
         gevent.spawn_later(seconds_until, self.check_delete, status)
         click.echo(click.style(
-            'scheduled ID={} for future deletion in {}'.format(status.id, td_format(seconds_until)), fg='blue'))
+            'scheduled ID={} for future deletion in {} or {}s'.format(status.id, td_format(seconds_until), seconds_until), fg='blue'))
 
     def check_delete(self, status):
+        click.echo(click.style(
+            'ID={} was scheduled for deletion, checking if it should be deleted'.format(status_id), fg='cyan'))
         # get a fresh API handle
         self.api = self.get_api()
         status_id = status.id
         status = self.api.GetStatus(status_id)
         if status:
-            self.to_be_deleted(status)
+            if not self.to_be_deleted(status):
+                click.echo(click.style(
+                    "ID={} won't be deleted".format(status_id), fg='cyan'))
+
         else:
             click.echo(click.style(
                 'problem fetching status ID={}'.format(status_id), fg='red'))
@@ -193,7 +198,7 @@ class Deleter:
                 # get a fresh API handle
                 self.api = self.get_api()
                 max_id = self.check_for_tweets(last_max_id=max_id)
-                gevent.sleep(900)
+                gevent.sleep(3600)
                 delay = 1
             except requests.exceptions.RequestException as e:
                 delay = delay * 2.5
