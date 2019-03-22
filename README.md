@@ -5,8 +5,9 @@
 `tweet-delete` is a small Python tool for automatically deleting your tweets
 after some specified amount of time. It is intended to be used to create
 self-destructing tweets. `tweet-delete` runs continuously, and will check
-your timeline every 15 minutes to see if there are any new tweets which
-need to be deleted.
+your timeline every hour to see if there are any new tweets which
+need to be deleted. You may also specify a minimum engagement metric, which
+allows you to delete only the tweets that are junk 🗑.
 
 Self-destructing tweets are the hippest, trendiest, coolest thing on
 [Twitter](https://twitter.com/) right now. Want to be cool and hip? You need
@@ -19,7 +20,7 @@ Twitter dev account approval process is long and arduous. In other words, you
 will easily be in the top 0.1% of technically skilled Twitter users. You will
 be _super extra hip and cool_, and in the upper echelons of thought
 leadership, simply by using this tool. Wear your badge of honour loud and
-proud. Perhaps write "These tweets self destruct." in your bio?
+proud. Perhaps write "**These tweets self destruct.**" in your bio?
 
 ## Quickstart
 
