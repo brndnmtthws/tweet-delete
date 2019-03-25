@@ -71,28 +71,27 @@ class Deleter:
         self.ids_scheduled_for_deletion.add(status.id)
         created_at = parser.parse(status.created_at).replace(tzinfo=None)
         expires_at = created_at + self.delete_older_than
-        seconds_until = (expires_at - datetime.utcnow()).total_seconds()
+        # include additional 5 second delay
+        seconds_until = (expires_at - datetime.utcnow()).total_seconds() + 5
         seconds_until = max([10, seconds_until])
         gevent.spawn_later(seconds_until, self.check_delete, status)
         click.echo(click.style(
             'scheduled ID={} for future deletion in {}'.format(status.id, td_format(seconds_until)), fg='blue'))
 
     def check_delete(self, status):
-        status_id = status.id
-        click.echo(click.style(
-            'ID={} was scheduled for deletion, checking if it should be deleted'.format(status_id), fg='cyan'))
-        # get a fresh API handle
-        self.api = self.get_api()
-        status = self.api.GetStatus(status_id)
-        if status:
-            if self.to_be_deleted(status):
-                self.delete(status)
-            else:
+        try:
+            status_id = status.id
+            click.echo(click.style(
+                'ID={} was scheduled for deletion, checking if it should be deleted'.format(status_id), fg='cyan'))
+            # get a fresh API handle
+            self.api = self.get_api()
+            status = self.api.GetStatus(status_id)
+            if not self.to_be_deleted(status):
                 click.echo(click.style(
                     "ID={} won't be deleted".format(status_id), fg='cyan'))
-        else:
+        except twitter.error.TwitterError as e:
             click.echo(click.style(
-                'problem fetching status ID={}'.format(status_id), fg='red'))
+                "caught exception: {}".format(e), fg='red'))
 
     def delete(self, status):
         click.echo(click.style("🗑  deleting tweet ID={} favourites={} retweets={} text={}".format(
@@ -202,7 +201,7 @@ class Deleter:
                 max_id = self.check_for_tweets(last_max_id=max_id)
                 gevent.sleep(3600)
                 delay = 1
-            except requests.exceptions.RequestException as e:
+            except (twitter.error.TwitterError, requests.exceptions.RequestException) as e:
                 delay = delay * 2.5
                 delay = min([delay, 300])
                 click.echo(click.style(
