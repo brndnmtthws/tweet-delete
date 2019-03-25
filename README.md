@@ -7,8 +7,7 @@ after some specified amount of time. It is intended to be used to create
 self-destructing tweets. `tweet-delete` runs continuously, and will check
 your timeline every hour to see if there are any new tweets which
 need to be deleted. You may also specify a minimum engagement metric, which
-allows you to delete only the tweets that are junk 🗑. Throw some tweets out
-there and see what sticks.
+allows you to delete only the tweets that are junk 🗑.
 
 Self-destructing tweets are the hippest, trendiest, coolest thing on
 [Twitter](https://twitter.com/) right now. Want to be cool and hip? You need
