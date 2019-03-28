@@ -121,13 +121,13 @@ class Deleter:
 
     @staticmethod
     def print_stats_for(name, values):
-        from statistics import mean, harmonic_mean, median, mode
+        from statistics import mean, harmonic_mean, median
 
         click.echo(click.style(
-            '🔢 {}: count={} min={} max={} mean={:.1f} harmonic_mean={:.1f} median={:.1f} mode={:.1f}'.format(
+            '🔢 {}: count={} min={} max={} mean={:.1f} harmonic_mean={:.1f} median={:.1f}'.format(
                 name.ljust(16), len(values), min(values), max(values),
                 mean(values), harmonic_mean(
-                    values), median(values), mode(values)
+                    values), median(values)
             ), fg='magenta'))
 
         # make a tiny histo
