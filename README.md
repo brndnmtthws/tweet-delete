@@ -75,7 +75,8 @@ $ tweet-delete \
     --access_token_key=<access_token_key> \
     --access_token_secret=<access_token_secret> \
     --delete_older_than="7 days" \
-    --delete_everything_after=2019-01-01
+    --delete_everything_after=2019-01-01 \
+    --minimum_engagement=1
 ...
 ```
 
