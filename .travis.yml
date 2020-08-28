@@ -35,4 +35,4 @@ after_script:
 cache:
   pip: true
   directories:
-    - "$HOME/.cache/pre-commit"
+    - "$HOME/.cache/pypoetry"
