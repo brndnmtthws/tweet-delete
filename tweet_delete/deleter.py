@@ -147,6 +147,10 @@ class Deleter:
     def print_stats_for(name, values):
         from statistics import mean, harmonic_mean, median
 
+        if not values or len(values) == 0:
+            # skip because it's empty
+            return
+
         click.echo(
             click.style(
                 "🔢 {}: count={} min={} max={} mean={:.1f} harmonic_mean={:.1f} median={:.1f}".format(
