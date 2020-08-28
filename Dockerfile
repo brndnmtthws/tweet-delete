@@ -1,12 +1,13 @@
 FROM python:3-alpine
 
-RUN apk add --no-cache --update build-base libffi-dev
+RUN apk add --no-cache --update build-base libffi-dev openssl-dev
 
 WORKDIR /app
-COPY . /app/src
+COPY . /app
 
-RUN cd src \
-  && pip install --no-cache-dir . \
-  && apk del binutils libmagic file libgcc gcc musl-dev libc-dev g++ make fortify-headers build-base libffi-dev
+RUN pip install --upgrade pip \
+  && pip install poetry \
+  && poetry install --no-dev \
+  && apk del binutils libmagic file libgcc gcc musl-dev libc-dev g++ make fortify-headers build-base libffi-dev openssl-dev
 
-ENTRYPOINT [ "tweet-delete" ]
+CMD poetry run tweet-delete

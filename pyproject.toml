@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "tweet-delete"
+version = "0.1.16"
+description = "Self-destructing Tweet tool"
+authors = ["Brenden Matthews <brenden@brndn.io>"]
+license = "MIT"
+documentation = "https://github.com/brndnmtthws/tweet-delete/blob/master/README.md"
+homepage = "https://github.com/brndnmtthws/tweet-delete"
+readme = "README.md"
+repository = "https://github.com/brndnmtthws/tweet-delete.git"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+click = "^7.1.2"
+python-twitter = "^3.5"
+gevent = "^20.6.2"
+python-dateutil = "^2.8.1"
+pytimeparse = "^1.1.8"
+colorama = "^0.4.3"
+Pygments = "^2.6.1"
+sparklines = "^0.4.2"
+numpy = "^1.19.1"
+
+[tool.poetry.dev-dependencies]
+pytest-cov = "^2.10.1"
+pytest = "^6.0.1"
+pytest-mock = "^3.3.1"
+pytest-vcr = "^1.0.2"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
+
+[tool.poetry.urls]
+"GitHub" = "https://github.com/brndnmtthws/tweet-delete"
+"Bug Tracker" = "https://github.com/brndnmtthws/tweet-delete/issues"
+
+[tool.poetry.scripts]
+tweet-delete = 'tweet_delete.entry:cli'

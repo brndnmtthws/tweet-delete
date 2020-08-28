@@ -28,3 +28,6 @@ venv.bak/
 # VSCode
 .vscode
 *.code-workspace
+
+# Ignore python egg thingies
+*.egg-info/

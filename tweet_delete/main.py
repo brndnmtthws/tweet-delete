@@ -53,7 +53,7 @@ CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 @click.option(
     "--minimum_engagement",
     type=int,
-    help="Minimum engagement count. ♥️  = 1, ♻️ = 2. Tweets below this amount are deleted. Set to a very high number to delete everything.",
+    help="Minimum engagement count. ♥️  = 1, ♻️  = 2. Tweets below this amount are deleted. Set to a very high number to delete everything.",
     required=True,
 )
 def cli(
