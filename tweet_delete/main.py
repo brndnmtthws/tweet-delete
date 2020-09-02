@@ -56,6 +56,11 @@ CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
     help="Minimum engagement count. ♥️  = 1, ♻️  = 2. Tweets below this amount are deleted. Set to a very high number to delete everything.",
     required=True,
 )
+@click.option(
+    "--remove_favorites",
+    help="Optionally remove all favorites, filtered by --delete_older_than (if specified)",
+    is_flag=True,
+)
 def cli(
     consumer_key,
     consumer_secret,
@@ -64,6 +69,7 @@ def cli(
     delete_older_than,
     delete_everything_after,
     minimum_engagement,
+    remove_favorites,
 ):
     """A simple program to delete all your tweets! Woohoo!"""
     from tweet_delete.deleter import Deleter
@@ -78,6 +84,7 @@ def cli(
         delete_older_than,
         delete_everything_after,
         minimum_engagement,
+        remove_favorites,
     )
     click.echo(click.style("🔑 validating credentials".ljust(77) + "🔑", fg="yellow"))
     creds = deleter.validate_creds()

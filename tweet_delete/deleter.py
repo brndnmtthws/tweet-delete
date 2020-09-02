@@ -1,15 +1,10 @@
 import twitter
 import gevent
 import click
-import json
-import sys
 import requests
 from tweet_delete.util import td_format
 from datetime import datetime
 from dateutil import parser
-from pygments import highlight
-from pygments.formatters import TerminalFormatter
-from pygments.lexers import JsonLexer
 
 
 class Deleter:
@@ -22,6 +17,7 @@ class Deleter:
         delete_older_than,
         delete_everything_after,
         minimum_engagement,
+        remove_favorites,
     ):
         self.consumer_key = consumer_key
         self.consumer_secret = consumer_secret
@@ -31,6 +27,7 @@ class Deleter:
         self.delete_everything_after = delete_everything_after
         self.last_since_id = None
         self.minimum_engagement = minimum_engagement
+        self.remove_favorites = remove_favorites
         self.ids_scheduled_for_deletion = set()
 
         self.api = self.get_api()
@@ -186,8 +183,7 @@ class Deleter:
 
     def check_for_tweets(self, last_max_id=None):
         statuses = [0]  # trick to force initial fetch
-        last_min_id = None
-        max_id = 0
+        max_id = None
         tweets_read = 0
         click.echo(
             click.style(
@@ -199,19 +195,19 @@ class Deleter:
         # same tweets as the previous run
         favourite_counts = []
         retweet_counts = []
-        while len(statuses) > 0 and (
-            last_max_id is None or (last_min_id is None or last_min_id > last_max_id)
-        ):
+        has_statuses = True
+        while has_statuses:
+            has_statuses = False
             statuses = self.api.GetUserTimeline(
-                include_rts=True, exclude_replies=False, max_id=last_min_id, count=200
+                include_rts=True, exclude_replies=False, max_id=max_id, count=200
             )
             tweets_read += len(statuses)
             for status in statuses:
-                max_id = max([status.id, max_id])
-                if last_min_id:
-                    last_min_id = min([status.id - 1, last_min_id])
+                has_statuses = True
+                if max_id:
+                    max_id = min([status.id, max_id])
                 else:
-                    last_min_id = status.id - 1
+                    max_id = status.id
                 self.to_be_deleted(status)
 
                 if not status.retweeted_status:
@@ -242,8 +238,36 @@ class Deleter:
             Deleter.print_stats_for("retweets", retweet_counts)
         return max_id
 
+    def check_and_remove_favorites(self):
+        if not self.remove_favorites:
+            return None
+
+        has_favourites = True
+        max_id = None
+
+        while has_favourites:
+            has_favourites = False
+            for fav in self.api.GetFavorites(count=200, max_id=max_id):
+                has_favourites = True
+                if max_id is None:
+                    max_id = fav.id
+                else:
+                    max_id = min(max_id, fav.id)
+
+                created_at = parser.parse(fav.created_at).replace(tzinfo=None)
+                expires_at = created_at + self.delete_older_than
+                if (expires_at - datetime.utcnow()).total_seconds() <= 0:
+                    click.echo(
+                        click.style(
+                            "deleting favorite with ID={}".format(fav.id),
+                            fg="blue",
+                        )
+                    )
+                    self.api.DestroyFavorite(status_id=fav.id)
+
     def run(self):
         max_id = self.check_for_tweets()
+        self.check_and_remove_favorites()
         gevent.sleep(60)
         delay = 5
         while True:
@@ -251,6 +275,7 @@ class Deleter:
                 # get a fresh API handle
                 self.api = self.get_api()
                 max_id = self.check_for_tweets(last_max_id=max_id)
+                self.check_and_remove_favorites()
                 gevent.sleep(3600)
                 delay = 1
             except (

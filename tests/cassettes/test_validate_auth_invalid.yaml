@@ -1,44 +1,47 @@
 interactions:
-- request:
-    body: null
-    headers:
-      Accept:
-      - !!binary |
-        Ki8q
-      Accept-Encoding:
-      - !!binary |
-        Z3ppcCwgZGVmbGF0ZQ==
-      Authorization:
-      - !!binary |
-        T0F1dGggb2F1dGhfbm9uY2U9IjE0NzY4NjE1NzI3NjU0MzczMjI2MTU1MjY1OTU3MCIsIG9hdXRo
-        X3RpbWVzdGFtcD0iMTU1MjY1OTU3MCIsIG9hdXRoX3ZlcnNpb249IjEuMCIsIG9hdXRoX3NpZ25h
-        dHVyZV9tZXRob2Q9IkhNQUMtU0hBMSIsIG9hdXRoX2NvbnN1bWVyX2tleT0iYSIsIG9hdXRoX3Rv
-        a2VuPSJjIiwgb2F1dGhfc2lnbmF0dXJlPSJ6aTFxeHdJJTJCeHpaTEZ3ODFVa0xRSmJQNXRXQSUz
-        RCI=
-      Connection:
-      - !!binary |
-        a2VlcC1hbGl2ZQ==
-      User-Agent:
-      - !!binary |
-        cHl0aG9uLXJlcXVlc3RzLzIuMjAuMQ==
-    method: GET
-    uri: https://api.twitter.com/1.1/application/rate_limit_status.json?tweet_mode=compat
-  response:
-    body:
-      string: !!binary |
-        H4sIAAAAAAAAAKpWSi0qyi8qVrKKrlZKzk9JVbKysNRRyk0tLk5MB3KUPPPKEnMyUxTyixRSKwoy
-        i1JTFErys1Pz9JRqY2sBAAAA//8DAJyYHHM+AAAA
-    headers:
-      content-encoding: [gzip]
-      content-length: ['87']
-      content-type: [application/json; charset=utf-8]
-      date: ['Fri, 15 Mar 2019 14:19:30 GMT']
-      server: [tsa_b]
-      set-cookie: ['personalization_id="v1_E60JgLWUQB7lLC5pQsOnQA=="; Max-Age=63072000;
-          Expires=Sun, 14 Mar 2021 14:19:30 GMT; Path=/; Domain=.twitter.com', 'guest_id=v1%3A155265957080724890;
-          Max-Age=63072000; Expires=Sun, 14 Mar 2021 14:19:30 GMT; Path=/; Domain=.twitter.com']
-      strict-transport-security: [max-age=631138519]
-      x-connection-hash: [60ac2cd909281740979dd317f20ef8ce]
-      x-response-time: ['7']
-    status: {code: 401, message: Authorization Required}
+  - request:
+      body: null
+      headers:
+        Accept:
+          - !!binary |
+            Ki8q
+        Accept-Encoding:
+          - !!binary |
+            Z3ppcCwgZGVmbGF0ZQ==
+        Authorization:
+          - !!binary |
+            T0F1dGggb2F1dGhfbm9uY2U9IjE0NzY4NjE1NzI3NjU0MzczMjI2MTU1MjY1OTU3MCIsIG9hdXRo
+            X3RpbWVzdGFtcD0iMTU1MjY1OTU3MCIsIG9hdXRoX3ZlcnNpb249IjEuMCIsIG9hdXRoX3NpZ25h
+            dHVyZV9tZXRob2Q9IkhNQUMtU0hBMSIsIG9hdXRoX2NvbnN1bWVyX2tleT0iYSIsIG9hdXRoX3Rv
+            a2VuPSJjIiwgb2F1dGhfc2lnbmF0dXJlPSJ6aTFxeHdJJTJCeHpaTEZ3ODFVa0xRSmJQNXRXQSUz
+            RCI=
+        Connection:
+          - !!binary |
+            a2VlcC1hbGl2ZQ==
+        User-Agent:
+          - !!binary |
+            cHl0aG9uLXJlcXVlc3RzLzIuMjAuMQ==
+      method: GET
+      uri: https://api.twitter.com/1.1/application/rate_limit_status.json?tweet_mode=compat
+    response:
+      body:
+        string: !!binary |
+          H4sIAAAAAAAAAKpWSi0qyi8qVrKKrlZKzk9JVbKysNRRyk0tLk5MB3KUPPPKEnMyUxTyixRSKwoy
+          i1JTFErys1Pz9JRqY2sBAAAA//8DAJyYHHM+AAAA
+      headers:
+        content-encoding: [gzip]
+        content-length: ["87"]
+        content-type: [application/json; charset=utf-8]
+        date: ["Fri, 15 Mar 2019 14:19:30 GMT"]
+        server: [tsa_b]
+        set-cookie: [
+            'personalization_id="v1_E60JgLWUQB7lLC5pQsOnQA=="; Max-Age=63072000;
+            Expires=Sun, 14 Mar 2021 14:19:30 GMT; Path=/; Domain=.twitter.com',
+            "guest_id=v1%3A155265957080724890;
+            Max-Age=63072000; Expires=Sun, 14 Mar 2021 14:19:30 GMT; Path=/; Domain=.twitter.com",
+          ]
+        strict-transport-security: [max-age=631138519]
+        x-connection-hash: [60ac2cd909281740979dd317f20ef8ce]
+        x-response-time: ["7"]
+      status: { code: 401, message: Authorization Required }
 version: 1
