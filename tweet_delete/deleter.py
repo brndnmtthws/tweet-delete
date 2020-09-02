@@ -256,7 +256,7 @@ class Deleter:
 
                 created_at = parser.parse(fav.created_at).replace(tzinfo=None)
                 expires_at = created_at + self.delete_older_than
-                if (expires_at - datetime.utcnow()).total_seconds() <= 0:
+                if expires_at < datetime.utcnow():
                     click.echo(
                         click.style(
                             "deleting favorite with ID={}".format(fav.id),
@@ -264,6 +264,15 @@ class Deleter:
                         )
                     )
                     self.api.DestroyFavorite(status_id=fav.id)
+                else:
+                    click.echo(
+                        click.style(
+                            "favorite ID={} will be deleted later (after it expires)".format(
+                                fav.id
+                            ),
+                            fg="cyan",
+                        )
+                    )
 
     def run(self):
         max_id = self.check_for_tweets()

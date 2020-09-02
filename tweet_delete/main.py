@@ -114,5 +114,22 @@ def cli(
                 fg="yellow",
             )
         )
+    if remove_favorites:
+        click.echo(
+            click.style(
+                "👉 favorites created after {} will be deleted".format(
+                    str(delete_everything_after)
+                ).ljust(77)
+                + "👈",
+                fg="yellow",
+            )
+        )
+    else:
+        click.echo(
+            click.style(
+                "👉 favorites will NOT be deleted" + "👈",
+                fg="yellow",
+            )
+        )
     click.echo(click.style("🦅 off we go".ljust(77) + "🦅", fg="green"))
     deleter.run()
