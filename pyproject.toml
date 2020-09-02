@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "tweet-delete"
-version = "0.2.0"
+version = "0.2.1"
 description = "Self-destructing Tweet tool"
 authors = ["Brenden Matthews <brenden@brndn.io>"]
 license = "MIT"
