@@ -10,4 +10,4 @@ RUN pip install --upgrade pip \
   && poetry install --no-dev \
   && apk del binutils libmagic file libgcc gcc musl-dev libc-dev g++ make fortify-headers build-base libffi-dev openssl-dev
 
-CMD poetry run tweet-delete
+ENTRYPOINT ["poetry", "run", "tweet-delete"]

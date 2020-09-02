@@ -8,7 +8,6 @@ python:
 before_deploy:
   - pip install --upgrade pip
   - pip install --upgrade poetry
-  - poetry config http-basic.pypi $PYPI_USER $PYPI_PASS
   - poetry build
 deploy:
   provider: script
