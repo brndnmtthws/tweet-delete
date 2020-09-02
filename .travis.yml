@@ -8,10 +8,9 @@ python:
 before_deploy:
   - pip install --upgrade pip
   - pip install --upgrade poetry
-  - poetry build
 deploy:
   provider: script
-  script: poetry publish
+  script: poetry publish --build
   skip_existing: true
   on:
     tags: true
