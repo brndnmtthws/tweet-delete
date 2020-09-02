@@ -14,6 +14,7 @@ deploy:
   skip_existing: true
   on:
     tags: true
+    condition: $TRAVIS_PYTHON_VERSION == 3.8
 env:
   global:
     - CC_TEST_REPORTER_ID=987f85840846e90736b3e4243b87a441e6286ccb26d9dca056d0071e0857a108
