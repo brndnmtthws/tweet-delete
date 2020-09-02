@@ -127,7 +127,7 @@ def cli(
     else:
         click.echo(
             click.style(
-                "👉 favorites will NOT be deleted" + "👈",
+                "👉 favorites will NOT be deleted".ljust(77) + "👈",
                 fg="yellow",
             )
         )
