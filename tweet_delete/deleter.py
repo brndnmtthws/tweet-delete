@@ -29,6 +29,7 @@ class Deleter:
         self.minimum_engagement = minimum_engagement
         self.remove_favorites = remove_favorites
         self.ids_scheduled_for_deletion = set()
+        self.favourites_scheduled_for_deletion = set()
 
         self.api = self.get_api()
 
@@ -203,7 +204,9 @@ class Deleter:
             )
             tweets_read += len(statuses)
             for status in statuses:
-                has_statuses = True
+                created_at = parser.parse(status.created_at).replace(tzinfo=None)
+                if created_at > self.delete_everything_after:
+                    has_statuses = True
                 if max_id:
                     max_id = min([status.id, max_id])
                 else:
@@ -248,31 +251,41 @@ class Deleter:
         while has_favourites:
             has_favourites = False
             for fav in self.api.GetFavorites(count=200, max_id=max_id):
-                has_favourites = True
+                created_at = parser.parse(fav.created_at).replace(tzinfo=None)
+                if created_at > self.delete_everything_after:
+                    has_favourites = True
                 if max_id is None:
                     max_id = fav.id
                 else:
                     max_id = min(max_id, fav.id)
-
-                created_at = parser.parse(fav.created_at).replace(tzinfo=None)
                 expires_at = created_at + self.delete_older_than
-                if expires_at < datetime.utcnow():
+                if (
+                    created_at > self.delete_everything_after
+                    and fav not in self.favourites_scheduled_for_deletion
+                ):
+                    self.favourites_scheduled_for_deletion.add(fav)
+                    seconds_until = (expires_at - datetime.utcnow()).total_seconds() + 5
+                    seconds_until = max([10, seconds_until])
+                    gevent.spawn_later(seconds_until, self.delete_favourite, fav)
                     click.echo(
                         click.style(
-                            "deleting favorite with ID={}".format(fav.id),
-                            fg="blue",
-                        )
-                    )
-                    self.api.DestroyFavorite(status_id=fav.id)
-                else:
-                    click.echo(
-                        click.style(
-                            "favorite ID={} will be deleted later (after it expires)".format(
-                                fav.id
+                            "favorite ID={} will be deleted at {}".format(
+                                fav.id, expires_at
                             ),
                             fg="cyan",
                         )
                     )
+
+    def delete_favourite(self, fav):
+        click.echo(
+            click.style(
+                "deleting favorite with ID={}".format(fav.id),
+                fg="blue",
+            )
+        )
+        self.api.DestroyFavorite(status_id=fav.id)
+        if fav.id in self.favourites_scheduled_for_deletion:
+            self.favourites_scheduled_for_deletion.remove(fav.id)
 
     def run(self):
         max_id = self.check_for_tweets()

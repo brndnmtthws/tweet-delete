@@ -117,8 +117,9 @@ def cli(
     if remove_favorites:
         click.echo(
             click.style(
-                "👉 favorites created after {} will be deleted".format(
-                    str(delete_everything_after)
+                "👉 deleting favorites older than {} created after {}".format(
+                    td_format(delete_older_than.total_seconds()),
+                    str(delete_everything_after),
                 ).ljust(77)
                 + "👈",
                 fg="yellow",
