@@ -2,7 +2,7 @@
 
 # tweet-delete 🦜🔫
 
-`tweet-delete` is a small Python tool for automatically deleting your tweets
+`tweet-delete` is a small Python tool for automatically deleting your tweets (and favourites)
 after some specified amount of time. It is intended to be used to create
 self-destructing tweets. `tweet-delete` runs continuously, and will check
 your timeline every hour to see if there are any new tweets which
@@ -66,7 +66,7 @@ image](https://hub.docker.com/r/brndnmtthws/tweet-delete) if you prefer.
 
 Run the script by passing it the API keys you generated above. It will run
 continuously, and tweet all tweets that are older than `--delete-older-than`
-days starting on Jan 1, 2019.
+days starting on Jan 1, 2019. If you want to also remove favourites, add the `--remove_favorites` flag.
 
 ```ShellSession
 $ tweet-delete \
