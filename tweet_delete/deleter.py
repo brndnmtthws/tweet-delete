@@ -210,7 +210,7 @@ class Deleter:
             tweets_read += len(statuses)
             for status in statuses:
                 _last_max_id = (
-                    max(_last_max_id, status.id) if not _last_max_id else status.id
+                    max(_last_max_id, status.id) if _last_max_id else status.id
                 )
                 created_at = parser.parse(status.created_at).replace(tzinfo=None)
                 if created_at > self.delete_everything_after:

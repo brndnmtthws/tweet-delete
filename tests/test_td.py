@@ -199,13 +199,25 @@ def test_check_for_tweets(mocker, check_fixture_cm):
     mock.assert_has_calls(
         [
             call(
-                d.api, include_rts=True, exclude_replies=False, max_id=None, count=200
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=None,
+                count=200,
+                since_id=None,
             ),
-            call(d.api, include_rts=True, exclude_replies=False, max_id=91, count=200),
+            call(
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=91,
+                count=200,
+                since_id=None,
+            ),
         ]
     )
     assert len(mock.call_args_list) == 2
-    assert max_id == 91
+    assert max_id == 100
     calls = [call(s) for s in statuses]
     d.delete.assert_has_calls(calls)
     d.delete.reset_mock()
@@ -228,14 +240,26 @@ def test_check_for_tweets(mocker, check_fixture_cm):
     mock.assert_has_calls(
         [
             call(
-                d.api, include_rts=True, exclude_replies=False, max_id=None, count=200
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=None,
+                count=200,
+                since_id=None,
             ),
-            call(d.api, include_rts=True, exclude_replies=False, max_id=101, count=200),
+            call(
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=101,
+                count=200,
+                since_id=None,
+            ),
         ]
     )
 
     assert len(mock.call_args_list) == 2
-    assert max_id == 101
+    assert max_id == 110
     calls = [call(s) for s in statuses]
     d.delete.assert_has_calls(calls)
     d.delete.reset_mock()
@@ -259,13 +283,25 @@ def test_check_for_tweets(mocker, check_fixture_cm):
     mock.assert_has_calls(
         [
             call(
-                d.api, include_rts=True, exclude_replies=False, max_id=None, count=200
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=None,
+                count=200,
+                since_id=None,
             ),
-            call(d.api, include_rts=True, exclude_replies=False, max_id=111, count=200),
+            call(
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=111,
+                count=200,
+                since_id=None,
+            ),
         ]
     )
     assert len(mock.call_args_list) == 2
-    assert max_id == 111
+    assert max_id == 120
     d.delete.assert_not_called()
     d.delete.reset_mock()
 
@@ -288,12 +324,24 @@ def test_check_for_tweets(mocker, check_fixture_cm):
     mock.assert_has_calls(
         [
             call(
-                d.api, include_rts=True, exclude_replies=False, max_id=None, count=200
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=None,
+                count=200,
+                since_id=None,
             ),
-            call(d.api, include_rts=True, exclude_replies=False, max_id=111, count=200),
+            call(
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=111,
+                count=200,
+                since_id=None,
+            ),
         ]
     )
-    assert max_id == 111
+    assert max_id == 120
     assert len(d.delete.call_args_list) == 0
     d.delete.reset_mock()
 
@@ -316,13 +364,25 @@ def test_check_for_tweets(mocker, check_fixture_cm):
     mock.assert_has_calls(
         [
             call(
-                d.api, include_rts=True, exclude_replies=False, max_id=None, count=200
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=None,
+                count=200,
+                since_id=None,
             ),
-            call(d.api, include_rts=True, exclude_replies=False, max_id=101, count=200),
+            call(
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=101,
+                count=200,
+                since_id=None,
+            ),
         ]
     )
 
-    assert max_id == 101
+    assert max_id == 120
     assert len(d.delete.call_args_list) == 20
     calls = [call(s) for s in statuses2]
     d.delete.assert_has_calls(calls)
@@ -347,14 +407,33 @@ def test_check_for_tweets(mocker, check_fixture_cm):
     mock.assert_has_calls(
         [
             call(
-                d.api, include_rts=True, exclude_replies=False, max_id=None, count=200
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=None,
+                count=200,
+                since_id=None,
             ),
-            call(d.api, include_rts=True, exclude_replies=False, max_id=101, count=200),
-            call(d.api, include_rts=True, exclude_replies=False, max_id=91, count=200),
+            call(
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=101,
+                count=200,
+                since_id=None,
+            ),
+            call(
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=91,
+                count=200,
+                since_id=None,
+            ),
         ]
     )
 
-    assert max_id == 91
+    assert max_id == 120
     assert len(d.delete.call_args_list) == 20
     calls = [call(s) for s in statuses2]
     d.delete.assert_has_calls(calls)
@@ -395,13 +474,25 @@ def test_schedule_delete(mocker, check_fixture_cm):
     mock.assert_has_calls(
         [
             call(
-                d.api, include_rts=True, exclude_replies=False, max_id=None, count=200
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=None,
+                count=200,
+                since_id=None,
             ),
-            call(d.api, include_rts=True, exclude_replies=False, max_id=91, count=200),
+            call(
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=91,
+                count=200,
+                since_id=None,
+            ),
         ]
     )
     assert len(mock.call_args_list) == 2
-    assert max_id == 91
+    assert max_id == 100
 
     for s in statuses:
         assert s.id in d.ids_scheduled_for_deletion
@@ -441,13 +532,25 @@ def test_check_for_tweets2(mocker, check_fixture_cm):
     mock.assert_has_calls(
         [
             call(
-                d.api, include_rts=True, exclude_replies=False, max_id=None, count=200
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=None,
+                count=200,
+                since_id=None,
             ),
-            call(d.api, include_rts=True, exclude_replies=False, max_id=91, count=200),
+            call(
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=91,
+                count=200,
+                since_id=None,
+            ),
         ]
     )
     assert len(mock.call_args_list) == 2
-    assert max_id == 91
+    assert max_id == 100
     calls = [call(s) for s in statuses1]
     d.delete.assert_has_calls(calls)
     d.delete.reset_mock()
@@ -468,10 +571,19 @@ def test_check_for_tweets2(mocker, check_fixture_cm):
         max_id = d.check_for_tweets(max_id)
 
     mock.assert_has_calls(
-        [call(d.api, include_rts=True, exclude_replies=False, max_id=None, count=200)]
+        [
+            call(
+                d.api,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=None,
+                count=200,
+                since_id=100,
+            )
+        ]
     )
     assert len(mock.call_args_list) == 3
-    assert max_id == 91
+    assert max_id == 110
     calls = [call(s) for s in statuses2]
     d.delete.assert_has_calls(calls)
     d.delete.reset_mock()
