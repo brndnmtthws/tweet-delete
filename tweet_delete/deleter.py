@@ -186,6 +186,7 @@ class Deleter:
         statuses = [0]  # trick to force initial fetch
         max_id = None
         tweets_read = 0
+        _last_max_id = last_max_id
         click.echo(
             click.style(
                 "checking for tweets, starting from last_max_id={}".format(last_max_id),
@@ -200,10 +201,17 @@ class Deleter:
         while has_statuses:
             has_statuses = False
             statuses = self.api.GetUserTimeline(
-                include_rts=True, exclude_replies=False, max_id=max_id, count=200
+                since_id=last_max_id,
+                include_rts=True,
+                exclude_replies=False,
+                max_id=max_id,
+                count=200,
             )
             tweets_read += len(statuses)
             for status in statuses:
+                _last_max_id = (
+                    max(_last_max_id, status.id) if not _last_max_id else status.id
+                )
                 created_at = parser.parse(status.created_at).replace(tzinfo=None)
                 if created_at > self.delete_everything_after:
                     has_statuses = True
@@ -236,10 +244,10 @@ class Deleter:
             )
         )
 
-        if not last_max_id:
+        if not _last_max_id:
             Deleter.print_stats_for("favourites", favourite_counts)
             Deleter.print_stats_for("retweets", retweet_counts)
-        return max_id
+        return _last_max_id
 
     def check_and_remove_favorites(self):
         if not self.remove_favorites:
@@ -247,10 +255,21 @@ class Deleter:
 
         has_favourites = True
         max_id = None
+        favorites_read = 0
+
+        click.echo(
+            click.style(
+                "checking for favorites",
+                fg="cyan",
+            )
+        )
 
         while has_favourites:
             has_favourites = False
-            for fav in self.api.GetFavorites(count=200, max_id=max_id):
+            for fav in self.api.GetFavorites(
+                count=200, max_id=max_id, include_entities=False
+            ):
+                favorites_read += 1
                 created_at = parser.parse(fav.created_at).replace(tzinfo=None)
                 if created_at > self.delete_everything_after:
                     has_favourites = True
@@ -275,6 +294,14 @@ class Deleter:
                             fg="cyan",
                         )
                     )
+        click.echo(
+            click.style(
+                "✅ done checking for favorites, favorites_read={} max_id={}".format(
+                    favorites_read, max_id
+                ),
+                fg="cyan",
+            )
+        )
 
     def delete_favourite(self, fav):
         click.echo(
