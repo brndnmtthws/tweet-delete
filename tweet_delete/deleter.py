@@ -257,12 +257,7 @@ class Deleter:
         max_id = None
         favorites_read = 0
 
-        click.echo(
-            click.style(
-                "checking for favorites",
-                fg="cyan",
-            )
-        )
+        click.echo(click.style("checking for favorites", fg="cyan",))
 
         while has_favourites:
             has_favourites = False
@@ -280,9 +275,9 @@ class Deleter:
                 expires_at = created_at + self.delete_older_than
                 if (
                     created_at > self.delete_everything_after
-                    and fav not in self.favourites_scheduled_for_deletion
+                    and fav.id not in self.favourites_scheduled_for_deletion
                 ):
-                    self.favourites_scheduled_for_deletion.add(fav)
+                    self.favourites_scheduled_for_deletion.add(fav.id)
                     seconds_until = (expires_at - datetime.utcnow()).total_seconds() + 5
                     seconds_until = max([10, seconds_until])
                     gevent.spawn_later(seconds_until, self.delete_favourite, fav)
@@ -305,10 +300,7 @@ class Deleter:
 
     def delete_favourite(self, fav):
         click.echo(
-            click.style(
-                "deleting favorite with ID={}".format(fav.id),
-                fg="blue",
-            )
+            click.style("deleting favorite with ID={}".format(fav.id), fg="blue",)
         )
         self.api.DestroyFavorite(status_id=fav.id)
         if fav.id in self.favourites_scheduled_for_deletion:
