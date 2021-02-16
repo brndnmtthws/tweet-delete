@@ -320,14 +320,14 @@ python-versions = ">=3.5"
 
 [[package]]
 name = "pylint"
-version = "2.6.0"
+version = "2.6.1"
 description = "python code static checker"
 category = "dev"
 optional = false
 python-versions = ">=3.5.*"
 
 [package.dependencies]
-astroid = ">=2.4.0,<=2.5"
+astroid = ">=2.4.0,<2.5"
 colorama = {version = "*", markers = "sys_platform == \"win32\""}
 isort = ">=4.2.5,<6"
 mccabe = ">=0.6,<0.7"
@@ -616,7 +616,7 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.6"
-content-hash = "e43eabc149f02568f7db6bf05e9046e9cbfdd6cad540e28522c4b9739b6ee8b6"
+content-hash = "f2860c05f8b11568b90a6f2b377790671a89d8beeda5b3f28190766a22dae355"
 
 [metadata.files]
 appdirs = [
@@ -904,8 +904,8 @@ pygments = [
     {file = "Pygments-2.7.3.tar.gz", hash = "sha256:ccf3acacf3782cbed4a989426012f1c535c9a90d3a7fc3f16d231b9372d2b716"},
 ]
 pylint = [
-    {file = "pylint-2.6.0-py3-none-any.whl", hash = "sha256:bfe68f020f8a0fece830a22dd4d5dddb4ecc6137db04face4c3420a46a52239f"},
-    {file = "pylint-2.6.0.tar.gz", hash = "sha256:bb4a908c9dadbc3aac18860550e870f58e1a02c9f2c204fdf5693d73be061210"},
+    {file = "pylint-2.6.1-py3-none-any.whl", hash = "sha256:c363263b5aa5d4101e0e0c345155accc663ae2148be93a712b9c5ba341120ef9"},
+    {file = "pylint-2.6.1.tar.gz", hash = "sha256:a112c3a6d0b1a08e0c1581ced69d3be9e2bedd2e1e1cd6965d0454353015e6d0"},
 ]
 pyparsing = [
     {file = "pyparsing-2.4.7-py2.py3-none-any.whl", hash = "sha256:ef9d7589ef3c200abe66653d3f1ab1033c3c419ae9b9bdb1240a85b024efc88b"},
