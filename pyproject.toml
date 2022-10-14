@@ -11,7 +11,7 @@ repository = "https://github.com/brndnmtthws/tweet-delete.git"
 
 [tool.poetry.dependencies]
 python = ">=3.7.2,<4.0"
-click = "^7.1.2"
+click = ">=7.1.2,<9.0.0"
 python-twitter = "^3.5"
 gevent = ">=20.6.2,<23.0.0"
 python-dateutil = "^2.8.1"
