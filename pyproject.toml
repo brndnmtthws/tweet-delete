@@ -10,7 +10,7 @@ readme = "README.md"
 repository = "https://github.com/brndnmtthws/tweet-delete.git"
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = ">=3.7.2,<4.0"
 click = "^7.1.2"
 python-twitter = "^3.5"
 gevent = ">=20.6.2,<23.0.0"
@@ -27,7 +27,7 @@ pytest = "^6.2.2"
 pytest-mock = "^3.5.1"
 pytest-vcr = "^1.0.2"
 black = "^20.8b1"
-pylint = "^2.6.0"
+pylint = "^2.15.0"
 
 [tool.poetry.urls]
 "GitHub" = "https://github.com/brndnmtthws/tweet-delete"
