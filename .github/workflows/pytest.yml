@@ -10,14 +10,16 @@ jobs:
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
         poetry-version: ["1.2.2"]
-        os: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         id: setup-python
         with:
           python-version: ${{ matrix.python-version }}
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
       - uses: actions/cache@v3
         with:
           path: ~/.cache/pypoetry
