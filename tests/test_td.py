@@ -1,9 +1,9 @@
 import pytest
-import click
-from tweet_delete.deleter import Deleter
 import twitter
-from unittest.mock import patch, call
+from unittest.mock import call
 import dateutil
+
+from tweet_delete.deleter import Deleter
 
 
 @pytest.mark.vcr()

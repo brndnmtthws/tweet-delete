@@ -37,6 +37,9 @@ pylint = "^2.15.0"
 tweet-delete = 'tweet_delete.entry:cli'
 vscode = "vscode:vscode"
 
+[tool.poetry.group.dev.dependencies]
+pytest-gevent = "^1.1.0"
+
 [tool.pylint.messages_control]
 disable = "C0330, C0326"
 

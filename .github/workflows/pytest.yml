@@ -28,4 +28,5 @@ jobs:
       - name: Poetry install
         run: poetry install
       - name: Poetry run pytest
-        run: poetry run pytest
+        # See https://github.com/gevent/gevent/issues/1016
+        run: poetry run pytest-gevent
