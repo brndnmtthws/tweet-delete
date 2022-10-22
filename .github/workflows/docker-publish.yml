@@ -68,19 +68,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Cache TWS
-        id: cache-tws
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-tws
-        with:
-          path: tws/
-          key: ${{ runner.os }}-publish-${{ env.cache-name }}-${{ hashFiles('extract-installer.sh') }}
-
-      - name: Extract TWS installer
-        if: steps.cache-tws.outputs.cache-hit != 'true'
-        run: ./extract-installer.sh
-
       - name: Set up Python ${{ matrix.python-version }}
         id: setup-python
         uses: actions/setup-python@v4
