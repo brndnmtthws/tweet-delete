@@ -164,24 +164,6 @@ class Deleter:
             )
         )
 
-        # make a tiny histo
-        from sparklines import sparklines
-        import numpy as np
-
-        hist, _ = np.histogram(values, bins=range(15))
-        if hist.sum() > 0:
-            hist = [Deleter.zero_to_none(v) for v in list(hist)]
-
-            for line in sparklines(hist):
-                click.echo(
-                    click.style(
-                        "📈 {}: {} {} {}".format(
-                            (name + " histo").ljust(16), min(values), line, max(values)
-                        ),
-                        fg="magenta",
-                    )
-                )
-
     def check_for_tweets(self, last_max_id=None):
         statuses = [0]  # trick to force initial fetch
         max_id = None

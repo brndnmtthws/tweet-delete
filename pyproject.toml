@@ -18,8 +18,6 @@ python-dateutil = "^2.8.1"
 pytimeparse = "^1.1.8"
 colorama = "^0.4.3"
 Pygments = "^2.6.1"
-sparklines = "^0.4.2"
-numpy = "^1.19.1"
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^4.0.0"
