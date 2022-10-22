@@ -14,11 +14,16 @@ def validate_duration(ctx, param, value):
         from pytimeparse import parse
 
         seconds = parse(value)
-        if seconds <= 0:
-            raise click.BadParameter("Duration should be greater than 0")
+        if not seconds or seconds <= 0:
+            raise click.BadParameter(
+                "Duration must be specified and should be greater than 0"
+            )
         return datetime.timedelta(seconds=seconds)
     except ValueError:
-        raise click.BadParameter("Invalid duration (try '24h' or '7 days'")
+        raise click.BadParameter(
+            "Invalid duration (try '60s', '24h' or '7 days'. "
+            "See https://github.com/wroberts/pytimeparse for valid expressions."
+        )
 
 
 def validate_datetime(ctx, param, value):
@@ -127,7 +132,10 @@ def cli(
         )
     else:
         click.echo(
-            click.style("👉 favorites will NOT be deleted".ljust(77) + "👈", fg="yellow",)
+            click.style(
+                "👉 favorites will NOT be deleted".ljust(77) + "👈",
+                fg="yellow",
+            )
         )
     click.echo(click.style("🦅 off we go".ljust(77) + "🦅", fg="green"))
     deleter.run()
