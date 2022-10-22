@@ -12,6 +12,6 @@ RUN pip install --upgrade pip \
   && apk del binutils libmagic file libgcc gcc musl-dev libc-dev g++ make fortify-headers build-base libffi-dev openssl-dev
 
 COPY . /app
-RUN poetry install --no-dev
+RUN poetry install --only main
 
 ENTRYPOINT ["poetry", "run", "tweet-delete"]
