@@ -6,7 +6,6 @@ concurrency:
 jobs:
   pytest:
     strategy:
-      fail-fast: false
       matrix:
         python-version: ["3.8", "3.9", "3.10"]
         poetry-version: ["1.2.2"]
