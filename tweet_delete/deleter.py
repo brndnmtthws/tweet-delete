@@ -257,7 +257,12 @@ class Deleter:
         max_id = None
         favorites_read = 0
 
-        click.echo(click.style("checking for favorites", fg="cyan",))
+        click.echo(
+            click.style(
+                "checking for favorites",
+                fg="cyan",
+            )
+        )
 
         while has_favourites:
             has_favourites = False
@@ -300,7 +305,10 @@ class Deleter:
 
     def delete_favourite(self, fav):
         click.echo(
-            click.style("deleting favorite with ID={}".format(fav.id), fg="blue",)
+            click.style(
+                "deleting favorite with ID={}".format(fav.id),
+                fg="blue",
+            )
         )
         self.api.DestroyFavorite(status_id=fav.id)
         if fav.id in self.favourites_scheduled_for_deletion:
@@ -327,4 +335,4 @@ class Deleter:
                 delay = min([delay, 300])
                 click.echo(click.style("caught exception: {}".format(e), fg="red"))
                 click.echo(click.style("will retry in {}s".format(delay), fg="red"))
-                gevent.sleep(delay)
+                gevent.sleep(int(delay))
