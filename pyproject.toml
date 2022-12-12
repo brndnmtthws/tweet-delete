@@ -24,7 +24,7 @@ pytest-cov = "^4.0.0"
 pytest = "^7.2.0"
 pytest-mock = "^3.5.1"
 pytest-vcr = "^1.0.2"
-black = "^22.10.0"
+black = "^22.12.0"
 pylint = "^2.15.8"
 pytest-gevent = "^1.1.0"
 
