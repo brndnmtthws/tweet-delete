@@ -25,7 +25,7 @@ pytest = "^7.2.2"
 pytest-mock = "^3.5.1"
 pytest-vcr = "^1.0.2"
 black = "^23.3.0"
-pylint = "^2.17.1"
+pylint = "^2.17.2"
 pytest-gevent = "^1.1.0"
 
 [tool.poetry.urls]
