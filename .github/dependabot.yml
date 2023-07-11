@@ -1,26 +1,30 @@
 version: 2
 updates:
-- package-ecosystem: pip
-  directory: "/"
-  schedule:
-    interval: daily
-    time: "10:00"
-  open-pull-requests-limit: 10
-  reviewers:
-  - brndnmtthws
-  ignore:
-  - dependency-name: pylint
-    versions:
-    - 2.6.1
-    - 2.6.2
-    - 2.7.0
-    - 2.7.1
-    - 2.7.2
-    - 2.7.3
-    - 2.7.4
-    - 2.8.0
-    - 2.8.1
-  - dependency-name: pygments
-    versions:
-    - 2.7.4
-    - 2.8.0
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: daily
+      time: "10:00"
+    open-pull-requests-limit: 10
+    groups:
+      deps:
+        patterns:
+          - "*"
+    reviewers:
+      - brndnmtthws
+    ignore:
+      - dependency-name: pylint
+        versions:
+          - 2.6.1
+          - 2.6.2
+          - 2.7.0
+          - 2.7.1
+          - 2.7.2
+          - 2.7.3
+          - 2.7.4
+          - 2.8.0
+          - 2.8.1
+      - dependency-name: pygments
+        versions:
+          - 2.7.4
+          - 2.8.0
